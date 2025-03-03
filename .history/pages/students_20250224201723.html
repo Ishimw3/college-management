@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Étudiants</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Étudiants</h1>
+
+        <!-- Formulaire d'ajout d'étudiant -->
+        <section class="form-section">
+            <h2>Ajouter un étudiant</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" id="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom:</label>
+                    <input type="text" id="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="tel">Téléphone:</label>
+                    <input type="tel" id="tel" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="annee_entree">Année d'entrée:</label>
+                    <input type="number" id="annee_entree" required>
+                </div>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Liste des étudiants -->
+        <section class="list-section">
+            <h2>Liste des étudiants</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Année d'entrée</th>
+                        <th>Moyenne générale</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Martin</td>
+                        <td>Sophie</td>
+                        <td>2023</td>
+                        <td>14.5</td>
+                        <td>
+                            <button class="btn-view">Voir détails</button>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Détails étudiant (masqué par défaut) -->
+        <section class="student-details" id="details" style="display: none;">
+            <h2>Détails de l'étudiant</h2>
+            <div class="card">
+                <!-- Informations personnelles -->
+                <div class="personal-info">
+                    <h3>Informations personnelles</h3>
+                    <p><strong>Nom:</strong> <span id="detail-nom"></span></p>
+                    <p><strong>Prénom:</strong> <span id="detail-prenom"></span></p>
+                    <p><strong>Téléphone:</strong> <span id="detail-tel"></span></p>
+                    <p><strong>Email:</strong> <span id="detail-email"></span></p>
+                    <p><strong>Année d'entrée:</strong> <span id="detail-annee"></span></p>
+                </div>
+
+                <!-- Notes par matière -->
+                <div class="grades">
+                    <h3>Notes par matière</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Matière</th>
+                                <th>Note</th>
+                                <th>Moyenne de la classe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mathématiques</td>
+                                <td>15.5</td>
+                                <td>14.2</td>
+                            </tr>
+                            <tr>
+                                <td>Physique</td>
+                                <td>Non noté</td>
+                                <td>13.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Moyenne générale:</strong> <span id="detail-moyenne">14.5</span></p>
+                </div>
+
+                <button onclick="window.print()">Imprimer la fiche</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>

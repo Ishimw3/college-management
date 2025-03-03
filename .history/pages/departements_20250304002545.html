@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Départements</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Départements</h1>
+        
+        <!-- Formulaire d'ajout de département -->
+        <section class="form-section">
+            <h2>Ajouter un département</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom du département:</label>
+                        <input type="text" id="nom" name="nom" required placeholder="Entrez le nom du département">
+                        <div class="form-help">Ex: Sciences, Lettres, etc.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Site Web:</label>
+                        <input type="url" id="website" name="website" placeholder="https://exemple.com">
+                    </div>
+                </div>
+                <button type="submit">Ajouter le département</button>
+            </form>
+        </section>
+
+        <!-- Liste des départements -->
+        <section class="list-section">
+            <h2>Liste des départements</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Site Web</th>
+                        <th>Nombre d'étudiants</th>
+                        <th>Nombre de départements</th>
+                        <th>Moyenne</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Les données seront chargées dynamiquement -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script type="module" src="../assets/js/firebase-config.js"></script>
+    <script type="module" src="../assets/js/pages/departements.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Notes</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="colleges.html">Collèges</a></li>
+            <li><a href="departements.html">Départements</a></li>
+            <li><a href="teachers.html">Enseignants</a></li>
+            <li><a href="students.html">Étudiants</a></li>
+            <li><a href="subjects.html">Matières</a></li>
+            <li><a href="grades.html">Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Notes</h1>
+
+        <!-- Formulaire d'ajout de note -->
+        <section class="form-section">
+            <h2>Ajouter une note</h2>
+            <form>
+                <div class="form-group">
+                    <label for="etudiant">Étudiant:</label>
+                    <select id="etudiant" required>
+                        <option value="">Sélectionner un étudiant</option>
+                        <option value="1">Martin Sophie</option>
+                        <option value="2">Dubois Pierre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="matiere">Matière:</label>
+                    <select id="matiere" required>
+                        <option value="">Sélectionner une matière</option>
+                        <option value="1">Mathématiques</option>
+                        <option value="2">Physique</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="note">Note:</label>
+                    <input type="number" id="note" min="0" max="20" step="0.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" required>
+                </div>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Liste des notes -->
+        <section class="list-section">
+            <h2>Liste des notes</h2>
+            <div class="filters">
+                <div class="form-group">
+                    <label for="filter-etudiant">Filtrer par étudiant:</label>
+                    <select id="filter-etudiant">
+                        <option value="">Tous les étudiants</option>
+                        <option value="1">Martin Sophie</option>
+                        <option value="2">Dubois Pierre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-matiere">Filtrer par matière:</label>
+                    <select id="filter-matiere">
+                        <option value="">Toutes les matières</option>
+                        <option value="1">Mathématiques</option>
+                        <option value="2">Physique</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Matière</th>
+                        <th>Note</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Martin Sophie</td>
+                        <td>Mathématiques</td>
+                        <td>15.5</td>
+                        <td>2024-02-15</td>
+                        <td>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Statistiques -->
+        <section class="stats-section">
+            <h2>Statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Moyennes par matière</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Matière</th>
+                                <th>Moyenne</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mathématiques</td>
+                                <td>14.8</td>
+                            </tr>
+                            <tr>
+                                <td>Physique</td>
+                                <td>13.5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="stat-card">
+                    <h3>Matières sans notes</h3>
+                    <ul>
+                        <li>Chimie</li>
+                        <li>Anglais</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Gestion des Collèges</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="pages/colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="pages/departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="pages/teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="pages/students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="pages/subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="pages/grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container dashboard-container">
+        <h1>Tableau de bord</h1>
+        
+        <!-- Statistiques principales -->
+        <div class="stats-grid main-stats">
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-school stat-icon"></i>
+                    <div class="stat-label">Total des Collèges</div>
+                    <div class="stat-value">15</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +2 cette année
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-building stat-icon"></i>
+                    <div class="stat-label">Total des Départements</div>
+                    <div class="stat-value">45</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +5 cette année
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-chalkboard-teacher stat-icon"></i>
+                    <div class="stat-label">Total des Enseignants</div>
+                    <div class="stat-value">120</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +12 cette année
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-user-graduate stat-icon"></i>
+                    <div class="stat-label">Total des Étudiants</div>
+                    <div class="stat-value">1500</div>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i> +150 cette année
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sections rapides -->
+        <div class="quick-access-grid">
+            <div class="quick-access-card">
+                <h3><i class="fas fa-chart-line"></i> Performance Académique</h3>
+                <div class="performance-stats">
+                    <div class="chart-container">
+                        <div class="chart-value">14.5</div>
+                        <div class="chart-label">Moyenne Générale</div>
+                    </div>
+                    <div class="performance-details">
+                        <div class="detail-item">
+                            <span>Meilleure moyenne:</span>
+                            <strong>16.8</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Taux de réussite:</span>
+                            <strong>92%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-access-card">
+                <h3><i class="fas fa-calendar-alt"></i> Activités Récentes</h3>
+                <ul class="activity-list">
+                    <li>
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Nouveau département de Sciences</span>
+                        <small>Il y a 2 heures</small>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-plus"></i>
+                        <span>5 nouveaux enseignants</span>
+                        <small>Il y a 1 jour</small>
+                    </li>
+                    <li>
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Session de notes terminée</span>
+                        <small>Il y a 2 jours</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Aperçu du système -->
+        <div class="system-overview">
+            <h2>Aperçu du système</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>Accès Rapide</h4>
+                    <p>Navigation intuitive vers toutes les fonctionnalités</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Statistiques en Temps Réel</h4>
+                    <p>Suivez les performances en direct</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Sécurisé</h4>
+                    <p>Protection des données garantie</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

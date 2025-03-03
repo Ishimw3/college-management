@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Enseignants</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="colleges.html">Collèges</a></li>
+            <li><a href="departements.html">Départements</a></li>
+            <li><a href="teachers.html">Enseignants</a></li>
+            <li><a href="students.html">Étudiants</a></li>
+            <li><a href="subjects.html">Matières</a></li>
+            <li><a href="grades.html">Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Enseignants</h1>
+
+        <!-- Formulaire d'ajout d'enseignant -->
+        <section class="form-section">
+            <h2>Ajouter un enseignant</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" id="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom:</label>
+                    <input type="text" id="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="tel">Téléphone:</label>
+                    <input type="tel" id="tel" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_fonction">Date de prise de fonction:</label>
+                    <input type="date" id="date_fonction" required>
+                </div>
+                <div class="form-group">
+                    <label for="indice">Indice:</label>
+                    <input type="number" id="indice" required>
+                </div>
+                <div class="form-group">
+                    <label for="departement">Département:</label>
+                    <select id="departement" required>
+                        <option value="">Sélectionner un département</option>
+                        <option value="1">Sciences</option>
+                        <option value="2">Lettres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="matiere">Matière enseignée:</label>
+                    <select id="matiere" required>
+                        <option value="">Sélectionner une matière</option>
+                        <option value="1">Mathématiques</option>
+                        <option value="2">Physique</option>
+                    </select>
+                </div>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Liste des enseignants -->
+        <section class="list-section">
+            <h2>Liste des enseignants</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Département</th>
+                        <th>Matière</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dupont</td>
+                        <td>Jean</td>
+                        <td>Sciences</td>
+                        <td>Mathématiques</td>
+                        <td>
+                            <span class="contact-info">
+                                Tél: 0123456789<br>
+                                Email: j.dupont@college.fr
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-view">Voir fiche</button>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Fiche signalétique (masquée par défaut) -->
+        <section class="fiche-signaletique" id="fiche" style="display: none;">
+            <h2>Fiche Signalétique</h2>
+            <div class="card">
+                <div class="fiche-content">
+                    <h3>Informations personnelles</h3>
+                    <p><strong>Nom:</strong> <span id="fiche-nom"></span></p>
+                    <p><strong>Prénom:</strong> <span id="fiche-prenom"></span></p>
+                    <p><strong>Téléphone:</strong> <span id="fiche-tel"></span></p>
+                    <p><strong>Email:</strong> <span id="fiche-email"></span></p>
+                    <p><strong>Date de prise de fonction:</strong> <span id="fiche-date"></span></p>
+                    <p><strong>Indice:</strong> <span id="fiche-indice"></span></p>
+                    <h3>Informations professionnelles</h3>
+                    <p><strong>Département:</strong> <span id="fiche-departement"></span></p>
+                    <p><strong>Matière enseignée:</strong> <span id="fiche-matiere"></span></p>
+                </div>
+                <button onclick="window.print()">Imprimer la fiche</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

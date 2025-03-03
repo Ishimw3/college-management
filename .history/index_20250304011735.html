@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Gestion des Collèges</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="pages/colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="pages/departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="pages/teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="pages/students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="pages/subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="pages/grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container dashboard-container">
+        <h1>Tableau de bord</h1>
+        
+       
+
+        <!-- Statistiques principales -->
+        <div class="stats-grid main-stats">
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-school stat-icon"></i>
+                    <div class="stat-label">Total des Collèges</div>
+                    <div class="stat-value" data-stat="collegesCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-building stat-icon"></i>
+                    <div class="stat-label">Total des Départements</div>
+                    <div class="stat-value" data-stat="departmentsCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-chalkboard-teacher stat-icon"></i>
+                    <div class="stat-label">Total des Enseignants</div>
+                    <div class="stat-value" data-stat="teachersCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-item">
+                    <i class="fas fa-user-graduate stat-icon"></i>
+                    <div class="stat-label">Total des Étudiants</div>
+                    <div class="stat-value" data-stat="studentsCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques rapides -->
+        <div class="quick-access-grid">
+            <div class="quick-access-card">
+                <h3><i class="fas fa-chart-line"></i> Performance Académique</h3>
+                <div class="performance-stats">
+                    <div class="chart-container">
+                        <div class="chart-value" data-stat="averageGrade">0.0</div>
+                        <div class="chart-label">Moyenne Générale</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-access-card">
+                <h3><i class="fas fa-calendar-alt"></i> Activités Récentes</h3>
+                <ul class="activity-list">
+                    <!-- Activités chargées dynamiquement -->
+                </ul>
+            </div>
+        </div>
+
+         <!-- Barre de recherche déplacée en haut -->
+         <div class="search-section">
+            <div class="search-container">
+                <form id="resourceSearchForm" onsubmit="return false;">
+                    <input type="text" id="searchInput" placeholder="Rechercher des ressources...">
+                    <button type="submit" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- Ressources -->
+        <div class="resources-grid">
+            <div class="resource-card open-library">
+                <h3><i class="fas fa-book"></i> Bibliothèque Ouverte</h3>
+                <div id="open-library-content" class="api-content">
+                    <!-- Populated by API -->
+                </div>
+            </div>
+            
+            <div class="resource-card wikipedia">
+                <h3><i class="fab fa-wikipedia-w"></i> Articles Éducatifs</h3>
+                <div id="wikipedia-content" class="api-content">
+                    <!-- Populated by API -->
+                </div>
+            </div>
+            
+            <div class="resource-card quotes">
+                <h3><i class="fas fa-quote-right"></i> Citations Inspirantes</h3>
+                <div id="quotes-content" class="api-content">
+                    <!-- Populated by API -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/free-api-integration.js"></script>
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/pages/dashboard.js"></script>
+    <script type="module" src="/assets/js/router.js"></script>
+</body>
+</html>

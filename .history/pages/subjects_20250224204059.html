@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Matières</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Matières</h1>
+
+        <!-- Formulaire d'ajout de matière -->
+        <section class="form-section">
+            <h2>Ajouter une matière</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom_matiere">Nom de la matière:</label>
+                        <input type="text" id="nom_matiere" name="nom_matiere" required placeholder="Entrez le nom de la matière">
+                        <div class="form-help">Ex: Mathématiques, Physique, etc.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="salle">Salle:</label>
+                        <input type="text" id="salle" name="salle" required placeholder="Ex: S101">
+                        <div class="form-help">Numéro de la salle de cours</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="capacite">Capacité:</label>
+                    <input type="number" id="capacite" name="capacite" required min="1" max="100" placeholder="Ex: 30">
+                    <div class="form-help">Nombre maximum d'étudiants</div>
+                </div>
+                <button type="submit">Ajouter la matière</button>
+            </form>
+        </section>
+
+        <!-- Liste des matières -->
+        <section class="list-section">
+            <h2>Liste des matières</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matière</th>
+                        <th>Salle</th>
+                        <th>Capacité</th>
+                        <th>Enseignants</th>
+                        <th>Moyenne générale</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mathématiques</td>
+                        <td>S101</td>
+                        <td>30</td>
+                        <td>M. Dupont, Mme Martin</td>
+                        <td>15.2</td>
+                        <td>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>

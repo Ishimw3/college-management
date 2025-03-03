@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Collèges</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+            <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
+            <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+            <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+            <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+            <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Collèges</h1>
+        <!-- Formulaire d'ajout de collège -->
+        <section class="form-section">
+            <h2>Ajouter un collège</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom du collège:</label>
+                        <input type="text" id="nom" name="nom" required placeholder="Entrez le nom du collège">
+                        <div class="form-help">Nom officiel de l'établissement</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site">Site Internet:</label>
+                        <input type="url" id="site" name="site" required placeholder="https://www.exemple.fr">
+                        <div class="form-help">Adresse web officielle du collège</div>
+                    </div>
+                </div>
+                <button type="submit">Ajouter le collège</button>
+            </form>
+        </section>
+
+        <!-- Liste des collèges -->
+        <section class="list-section">
+            <h2>Liste des collèges</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Site Internet</th>
+                        <th>Nombre de départements</th>
+                        <th>Nombre d'étudiants</th>
+                        <th>Moyenne générale</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Collège Saint-Joseph</td>
+                        <td><a href="http://www.saint-joseph.fr">www.saint-joseph.fr</a></td>
+                        <td>5</td>
+                        <td>450</td>
+                        <td>14.8</td>
+                        <td>
+                            <button class="btn-view">Voir détails</button>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Détails collège (masqué par défaut) -->
+        <section class="college-details" id="college-details" style="display: none;">
+            <h2>Détails du collège</h2>
+            <div class="card">
+                <!-- Statistiques générales -->
+                <div class="stats">
+                    <h3>Statistiques</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Départements</span>
+                            <span class="stat-value">5</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Enseignants</span>
+                            <span class="stat-value">45</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Étudiants</span>
+                            <span class="stat-value">450</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Moyenne générale</span>
+                            <span class="stat-value">14.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moyennes par département -->
+                <div class="department-averages">
+                    <h3>Moyennes par département</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Département</th>
+                                <th>Nombre d'étudiants</th>
+                                <th>Moyenne</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sciences</td>
+                                <td>120</td>
+                                <td>15.2</td>
+                            </tr>
+                            <tr>
+                                <td>Lettres</td>
+                                <td>95</td>
+                                <td>14.5</td>
+                            </tr>
+                            <tr>
+                                <td>Langues</td>
+                                <td>85</td>
+                                <td>14.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Liste des salles -->
+                <div class="rooms-list">
+                    <h3>Salles de cours</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Numéro</th>
+                                <th>Capacité</th>
+                                <th>Matière</th>
+                                <th>État</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>S101</td>
+                                <td>30</td>
+                                <td>Mathématiques</td>
+                                <td>Disponible</td>
+                            </tr>
+                            <tr>
+                                <td>S102</td>
+                                <td>25</td>
+                                <td>Physique</td>
+                                <td>En cours</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="../assets/js/firebase-config.js"></script>
+    <script type="module" src="../assets/js/pages/colleges.js"></script>
+</body>
+</html>

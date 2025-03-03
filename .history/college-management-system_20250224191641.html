@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Collèges</title>
+    <link rel="stylesheet" href="college-styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#colleges">Collèges</a></li>
+            <li><a href="#departements">Départements</a></li>
+            <li><a href="#enseignants">Enseignants</a></li>
+            <li><a href="#etudiants">Étudiants</a></li>
+            <li><a href="#matieres">Matières</a></li>
+            <li><a href="#notes">Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Section Collèges -->
+        <section id="colleges">
+            <h2>Gestion des Collèges</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom du Collège</th>
+                        <th>Site Internet</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Collège Example</td>
+                        <td>www.college-example.fr</td>
+                        <td>
+                            <button>Modifier</button>
+                            <button>Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section Enseignants -->
+        <section id="enseignants">
+            <h2>Gestion des Enseignants</h2>
+            <div class="card">
+                <h3>Fiche Signalétique</h3>
+                <p><strong>Nom:</strong> Dupont</p>
+                <p><strong>Prénom:</strong> Jean</p>
+                <p><strong>Téléphone:</strong> 01 23 45 67 89</p>
+                <p><strong>Email:</strong> jean.dupont@college.fr</p>
+                <button onclick="window.print()">Imprimer la fiche</button>
+            </div>
+        </section>
+
+        <!-- Section Étudiants -->
+        <section id="etudiants">
+            <h2>Gestion des Étudiants</h2>
+            <div class="card">
+                <h3>Moyennes par matière</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Matière</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mathématiques</td>
+                            <td>15.5</td>
+                        </tr>
+                        <tr>
+                            <td>Physique</td>
+                            <td>Non noté</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Moyenne générale:</strong> 15.5</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

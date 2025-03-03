@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Matières</title>
+    <link rel="stylesheet" href="../css/college-styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="colleges.html">Collèges</a></li>
+            <li><a href="departements.html">Départements</a></li>
+            <li><a href="teachers.html">Enseignants</a></li>
+            <li><a href="students.html">Étudiants</a></li>
+            <li><a href="subjects.html">Matières</a></li>
+            <li><a href="grades.html">Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Gestion des Matières</h1>
+
+        <!-- Formulaire d'ajout de matière -->
+        <section class="form-section">
+            <h2>Ajouter une matière</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nom_matiere">Nom de la matière:</label>
+                    <input type="text" id="nom_matiere" required>
+                </div>
+                <div class="form-group">
+                    <label for="salle">Salle:</label>
+                    <input type="text" id="salle" required>
+                </div>
+                <div class="form-group">
+                    <label for="capacite">Capacité:</label>
+                    <input type="number" id="capacite" required>
+                </div>
+                <button type="submit">Ajouter</button>
+            </form>
+        </section>
+
+        <!-- Liste des matières -->
+        <section class="list-section">
+            <h2>Liste des matières</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matière</th>
+                        <th>Salle</th>
+                        <th>Capacité</th>
+                        <th>Enseignants</th>
+                        <th>Moyenne générale</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mathématiques</td>
+                        <td>S101</td>
+                        <td>30</td>
+                        <td>M. Dupont, Mme Martin</td>
+                        <td>15.2</td>
+                        <td>
+                            <button class="btn-edit">Modifier</button>
+                            <button class="btn-delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</body>
+</html>

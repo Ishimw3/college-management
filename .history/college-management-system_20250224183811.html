@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Collèges</title>
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: #2c3e50;
+            padding: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Conteneur principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tableaux */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        th {
+            background: #f5f5f5;
+        }
+
+        /* Formulaires */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 1rem 0;
+        }
+
+        input, select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+
+        /* Cartes */
+        .card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Impression */
+        @media print {
+            nav, button {
+                display: none;
+            }
+            
+            body {
+                font-size: 12pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#colleges">Collèges</a></li>
+            <li><a href="#departements">Départements</a></li>
+            <li><a href="#enseignants">Enseignants</a></li>
+            <li><a href="#etudiants">Étudiants</a></li>
+            <li><a href="#matieres">Matières</a></li>
+            <li><a href="#notes">Notes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Section Collèges -->
+        <section id="colleges">
+            <h2>Gestion des Collèges</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom du Collège</th>
+                        <th>Site Internet</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Collège Example</td>
+                        <td>www.college-example.fr</td>
+                        <td>
+                            <button>Modifier</button>
+                            <button>Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section Enseignants -->
+        <section id="enseignants">
+            <h2>Gestion des Enseignants</h2>
+            <div class="card">
+                <h3>Fiche Signalétique</h3>
+                <p><strong>Nom:</strong> Dupont</p>
+                <p><strong>Prénom:</strong> Jean</p>
+                <p><strong>Téléphone:</strong> 01 23 45 67 89</p>
+                <p><strong>Email:</strong> jean.dupont@college.fr</p>
+                <button onclick="window.print()">Imprimer la fiche</button>
+            </div>
+        </section>
+
+        <!-- Section Étudiants -->
+        <section id="etudiants">
+            <h2>Gestion des Étudiants</h2>
+            <div class="card">
+                <h3>Moyennes par matière</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Matière</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mathématiques</td>
+                            <td>15.5</td>
+                        </tr>
+                        <tr>
+                            <td>Physique</td>
+                            <td>Non noté</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Moyenne générale:</strong> 15.5</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

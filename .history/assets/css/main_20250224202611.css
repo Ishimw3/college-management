@@ -1,0 +1,357 @@
+:root {
+    --charcoal: #2A3132;
+    --rust: #763626;
+    --sky-blue: #90AFC5;
+    --light-sky: #b8d1e0;
+    --dark-rust: #562419;
+    --light-charcoal: #3d4748;
+}
+
+/* Reset et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--charcoal);
+    background-color: #f0f3f5;
+}
+
+/* Navigation */
+nav {
+    background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.2);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a {
+    color: var(--light-sky);
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+nav a:hover {
+    background-color: var(--rust);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(42, 49, 50, 0.08);
+}
+
+/* En-têtes */
+h1 {
+    margin-bottom: 2rem;
+    color: var(--charcoal);
+    font-size: 2.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rust), var(--sky-blue));
+    border-radius: 2px;
+}
+
+h2, h3 {
+    margin: 1.5rem 0;
+    color: #34495e;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sections */
+.form-section, .list-section {
+    margin-bottom: 3rem;
+}
+
+/* Formulaires */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--charcoal);
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid rgba(144, 175, 197, 0.3);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: var(--sky-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(144, 175, 197, 0.2);
+}
+
+button {
+    padding: 0.7rem 1.4rem;
+    background: var(--charcoal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+button:hover {
+    background: var(--rust);
+    transform: translateY(-2px);
+}
+
+/* Tableaux */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1.5rem 0;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.08);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+}
+
+th {
+    background: var(--charcoal);
+    color: white;
+    font-weight: 500;
+}
+
+td {
+    border-bottom: 1px solid rgba(144, 175, 197, 0.2);
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: rgba(144, 175, 197, 0.1);
+}
+
+/* Boutons dans les tableaux */
+.btn-edit, .btn-delete {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
+}
+
+.btn-edit {
+    background: var(--sky-blue);
+}
+
+.btn-delete {
+    background: var(--rust);
+}
+
+/* Cartes */
+.card {
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Impression */
+@media print {
+    nav, button, .form-section {
+        display: none;
+    }
+    
+    body {
+        background: white;
+    }
+    
+    .container {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    table {
+        border: 1px solid #ddd;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Grille de statistiques */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(144, 175, 197, 0.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(42, 49, 50, 0.12);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa, #fff);
+    border-radius: 8px;
+    border: 1px solid rgba(144, 175, 197, 0.3);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--rust);
+    margin-top: 0.5rem;
+}
+
+/* Filtres */
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa, #fff);
+    border: 1px solid rgba(144, 175, 197, 0.3);
+    border-radius: 12px;
+}
+
+/* Liste sans puces */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* États des salles */
+.rooms-list td:last-child {
+    font-weight: 500;
+}
+
+.rooms-list td:last-child:contains('Disponible') {
+    color: #2ecc71;
+}
+
+.rooms-list td:last-child:contains('En cours') {
+    color: var(--rust);
+}
+
+/* Améliorations pour l'impression */
+@media print {
+    .filters, 
+    .form-section,
+    .btn-edit,
+    .btn-delete {
+        display: none;
+    }
+
+    .stats-grid {
+        display: block;
+    }
+
+    .stat-card {
+        page-break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+        padding: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+    }
+}

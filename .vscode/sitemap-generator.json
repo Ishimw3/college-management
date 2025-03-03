@@ -1,0 +1,23 @@
+{
+  "sitemap.xml": {
+    "Protocol": "http",
+    "DomainName": "http://127.0.0.1:3000/pages/departements.html",
+    "Root": "",
+    "IncludeExt": [
+      ".html",
+      ".php"
+    ],
+    "Exclude": [],
+    "TagsToInclude": [
+      "priority",
+      "lastmod"
+    ],
+    "DefaultChangeFrequency": "monthly",
+    "TabCharacters": "\t",
+    "bIncludeWWW": false,
+    "bRemoveFileExtentions": false,
+    "bUseTrailingSlash": false,
+    "bAutomaticallyUpdateSitemap": true,
+    "bMinimized": false
+  }
+}

@@ -1,0 +1,342 @@
+:root {
+    --charcoal: #2A3132;
+    --rust: #763626;
+    --sky-blue: #90AFC5;
+    --light-sky: #b8d1e0;
+    --dark-rust: #562419;
+    --light-charcoal: #3d4748;
+    --input-bg: #f8fafc;
+    --input-border: #e2e8f0;
+    --input-focus-border: var(--sky-blue);
+    --input-shadow: rgba(144, 175, 197, 0.1);
+    --form-shadow: rgba(42, 49, 50, 0.04);
+}
+
+/* Reset et styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--charcoal);
+    background-color: #f0f3f5;
+}
+
+/* Navigation */
+nav {
+    background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.2);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a {
+    color: var(--light-sky);
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+nav a:hover {
+    background-color: var(--rust);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(42, 49, 50, 0.08);
+}
+
+/* En-têtes */
+h1 {
+    margin-bottom: 2rem;
+    color: var(--charcoal);
+    font-size: 2.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rust), var(--sky-blue));
+    border-radius: 2px;
+}
+
+h2, h3 {
+    margin: 1.5rem 0;
+    color: #34495e;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sections */
+.form-section, .list-section {
+    margin-bottom: 3rem;
+}
+
+.form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--form-shadow);
+    margin-bottom: 3rem;
+}
+
+/* Formulaires */
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: var(--charcoal);
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: var(--sky-blue);
+    background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--sky-blue);
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 4px var(--input-shadow);
+}
+
+/* Style pour les champs requis */
+input:required + label::after,
+select:required + label::after {
+    content: '*';
+    color: var(--rust);
+    margin-left: 4px;
+}
+
+/* Style pour les champs valides/invalides */
+input:valid,
+select:valid {
+    border-color: #2ecc71;
+}
+
+input:invalid:not(:placeholder-shown),
+select:invalid:not(:focus) {
+    border-color: var(--rust);
+}
+
+/* Boutons de formulaire */
+form button {
+    background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+form button:hover {
+    background: linear-gradient(135deg, var(--rust), var(--dark-rust));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(118, 54, 38, 0.2);
+}
+
+form button:active {
+    transform: translateY(0);
+}
+
+/* Animation de focus pour les labels */
+.form-group:focus-within label {
+    color: var(--sky-blue);
+    transform: translateY(-2px);
+}
+
+/* Style pour les select */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232A3132' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* Groupes de formulaires en colonnes */
+@media (min-width: 768px) {
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Message d'aide pour les champs */
+.form-help {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* Animation de chargement pour les boutons */
+form button.loading {
+    position: relative;
+    color: transparent;
+}
+
+form button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s infinite linear;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Liste sans puces */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* États des salles */
+.rooms-list td:last-child {
+    font-weight: 500;
+}
+
+.rooms-list td:last-child:contains('Disponible') {
+    color: #2ecc71;
+}
+
+.rooms-list td:last-child:contains('En cours') {
+    color: var(--rust);
+}
+
+/* Améliorations pour l'impression */
+@media print {
+    .filters, 
+    .form-section,
+    .btn-edit,
+    .btn-delete {
+        display: none;
+    }
+
+    .stats-grid {
+        display: block;
+    }
+
+    .stat-card {
+        page-break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+        padding: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem;
+    }
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    background: var(--charcoal);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+}
+
+.notification.success {
+    background: #2ecc71;
+}
+
+.notification.error {
+    background: var(--rust);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
