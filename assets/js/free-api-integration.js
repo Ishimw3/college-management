@@ -75,58 +75,44 @@ const FALLBACK_QUOTES = [
     }
 ];
 
+const fallbackQuotes = [
+    { text: "L'éducation est l'arme la plus puissante pour changer le monde.", author: "Nelson Mandela" },
+    { text: "La connaissance est le pouvoir.", author: "Francis Bacon" },
+    { text: "Apprendre sans réfléchir est vain. Réfléchir sans apprendre est dangereux.", author: "Confucius" }
+];
+
 async function fetchQuotes() {
     try {
-        const container = document.getElementById('quotes-content');
-        if (!container) return;
-        
-        container.innerHTML = '<div class="loading">Chargement...</div>';
-        
-        // Try fetching from multiple quote APIs
-        const apis = [
-            'https://api.quotable.io/quotes/random?limit=3&tags=education,knowledge',
-            'https://type.fit/api/quotes'
-        ];
-
-        for (const apiUrl of apis) {
-            try {
-                const response = await fetch(apiUrl, {
-                    headers: { 'Accept': 'application/json' },
-                    timeout: 5000 // 5 second timeout
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                let quotes;
-                const data = await response.json();
-
-                // Handle different API response formats
-                if (Array.isArray(data)) {
-                    quotes = data.slice(0, 3).map(quote => ({
-                        content: quote.text || quote.content,
-                        author: quote.author || 'Anonyme'
-                    }));
-                }
-
-                if (quotes && quotes.length > 0) {
-                    displayQuotes(quotes);
-                    return;
-                }
-            } catch (error) {
-                console.warn(`Failed to fetch from ${apiUrl}:`, error);
-                continue;
-            }
+        // Try quotable.io API first
+        const response = await fetch('https://api.quotable.io/quotes/random?limit=3&tags=education,knowledge');
+        if (response.ok) {
+            const quotes = await response.json();
+            return quotes.map(quote => ({
+                text: quote.content,
+                author: quote.author
+            }));
         }
-
-        // If all APIs fail, use fallback quotes
-        throw new Error('All quote APIs failed');
-
     } catch (error) {
-        console.error('Error fetching quotes:', error);
-        displayQuotes(FALLBACK_QUOTES);
+        console.warn('Failed to fetch from quotable.io:', error);
     }
+
+    try {
+        // Try type.fit API as fallback
+        const response = await fetch('https://type.fit/api/quotes');
+        if (response.ok) {
+            const quotes = await response.json();
+            return quotes
+                .filter(quote => quote.text.toLowerCase().includes('education') || 
+                               quote.text.toLowerCase().includes('knowledge'))
+                .slice(0, 3);
+        }
+    } catch (error) {
+        console.warn('Failed to fetch from type.fit:', error);
+    }
+
+    // Return fallback quotes if both APIs fail
+    console.log('Using fallback quotes');
+    return fallbackQuotes;
 }
 
 // Add error display function
@@ -189,20 +175,13 @@ function displayWikipediaArticles(articles) {
 }
 
 function displayQuotes(quotes) {
-    const container = document.getElementById('quotes-content');
-    if (!container) return;
+    const quotesContainer = document.getElementById('quotes-content');
+    if (!quotesContainer) return;
 
-    if (!quotes || quotes.length === 0) {
-        container.innerHTML = '<p>Aucune citation disponible</p>';
-        return;
-    }
-
-    container.innerHTML = quotes.map(quote => `
-        <div class="quote-item">
-            <blockquote>
-                <p>"${quote.content}"</p>
-                <footer>— ${quote.author || 'Anonyme'}</footer>
-            </blockquote>
+    quotesContainer.innerHTML = quotes.map(quote => `
+        <div class="quote">
+            <p>"${quote.text}"</p>
+            <footer>- ${quote.author || 'Anonymous'}</footer>
         </div>
     `).join('');
 }
