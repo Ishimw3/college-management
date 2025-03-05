@@ -2,14 +2,14 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebas
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB4SyYr7R7CcwsNLPT5Am4_OsydDKAMmJg",
-    authDomain: "collegemanagement-58ff9.firebaseapp.com",
-    projectId: "collegemanagement-58ff9",
-    storageBucket: "collegemanagement-58ff9.firebasestorage.app",
-    messagingSenderId: "449033733330",
-    appId: "1:449033733330:web:0efdfa2488ad429ca5d90b",
-    measurementId: "G-H85ZZWBCT7"
-  };
+    // Make sure these values match your Firebase project settings
+    apiKey: "your-api-key",
+    authDomain: "your-auth-domain",
+    projectId: "your-project-id",
+    storageBucket: "your-storage-bucket",
+    messagingSenderId: "your-messaging-sender-id",
+    appId: "your-app-id"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
