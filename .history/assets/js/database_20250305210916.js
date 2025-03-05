@@ -1,7 +1,7 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { initializeFirestore, CACHE_SIZE_UNLIMITED, persistentLocalCache, persistentMultipleTabManager } 
-from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB4SyYr7R7CcwsNLPT5Am4_OsydDKAMmJg",
@@ -11,16 +11,12 @@ const firebaseConfig = {
     messagingSenderId: "449033733330",
     appId: "1:449033733330:web:0efdfa2488ad429ca5d90b",
     measurementId: "G-H85ZZWBCT7"
-  };
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = initializeFirestore(app, {
-    localCache: persistentLocalCache({
-        tabManager: persistentMultipleTabManager(),
-        cacheSizeBytes: CACHE_SIZE_UNLIMITED
-    })
-});
+const db = getFirestore(app);
 
-export { auth, db, app };
+// Export auth and db immediately for other modules
+export { auth, db };
