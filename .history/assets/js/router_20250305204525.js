@@ -3,9 +3,6 @@ import { signOut } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth
 
 class Router {
     constructor() {
-        // Configure base path for GitHub Pages
-        this.basePath = '/college-management';
-        
         this.routes = {
             public: ['login.html', 'register.html'],
             private: [
@@ -25,20 +22,9 @@ class Router {
         this.initializeAuth();
     }
 
-    getFullPath(path) {
-        // Remove leading slash if exists
-        path = path.replace(/^\//, '');
-        return `${this.basePath}/${path}`;
-    }
-
-    getCurrentPath() {
-        // Remove base path from current pathname
-        return window.location.pathname.replace(this.basePath, '') || '/';
-    }
-
     checkAuthState() {
         const currentUser = auth.currentUser;
-        const currentPath = this.getCurrentPath();
+        const currentPath = window.location.pathname;
         
         if (!currentUser && !this.isPublicRoute(currentPath)) {
             console.log('No user found, redirecting to login');
@@ -50,7 +36,7 @@ class Router {
 
     initializeAuth() {
         auth.onAuthStateChanged(user => {
-            const currentPath = this.getCurrentPath();
+            const currentPath = window.location.pathname;
             console.log('Auth state changed - Path:', currentPath, 'User:', user?.email);
 
             if (!user && !this.isPublicRoute(currentPath)) {
@@ -70,17 +56,13 @@ class Router {
     }
 
     redirectToLogin() {
-        const currentPath = this.getCurrentPath();
         if (!window.location.pathname.includes('login.html')) {
-            sessionStorage.setItem('redirectUrl', currentPath);
-            window.location.href = this.getFullPath('login.html');
+            window.location.href = '/college-management/login.html';
         }
     }
 
     redirectToDashboard() {
-        const redirectUrl = sessionStorage.getItem('redirectUrl') || 'index.html';
-        sessionStorage.removeItem('redirectUrl');
-        window.location.href = this.getFullPath(redirectUrl);
+        window.location.href = '/college-management/index.html';
     }
 
     async logout() {
