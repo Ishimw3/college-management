@@ -4,7 +4,7 @@
     <base href="/college-management/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Système de Gestion des Collèges</title>
+    <title>Système de Gestion des Collèges</title> 
     
     <!-- DNS Prefetching -->
     <link rel="dns-prefetch" href="https://www.gstatic.com">
@@ -144,22 +144,34 @@
     <script type="module">
         import { auth } from './assets/js/firebase-config.js';
         import router from './assets/js/router.js';
+        import { DatabaseService } from './assets/js/services/database.js';
 
-        // Single auth state listener
+        // Initialize database service
+        window.dbService = DatabaseService;
+
+        // Handle authentication state
         auth.onAuthStateChanged(user => {
             if (!user) {
                 router.redirectToLogin();
             } else {
                 console.log('User logged in:', user.email);
-                // Initialize dashboard after authentication
-                import('./assets/js/pages/dashboard.js');
             }
         });
 
         // Logout handler
-        document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
             e.preventDefault();
-            router.logout();
+            try {
+                // Remove all listeners before logout
+                DatabaseService.removeListener('colleges');
+                DatabaseService.removeListener('departments');
+                DatabaseService.removeListener('teachers');
+                DatabaseService.removeListener('students');
+                DatabaseService.removeListener('grades');
+                await router.logout();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
         });
     </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>
