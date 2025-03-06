@@ -8,17 +8,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
-            <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
-            <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
-            <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
-            <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
-            <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
-        </ul>
-    </nav>
+    <header class="main-header">
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                    <li><a href="colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
+                    <li><a href="departements.html"><i class="fas fa-building"></i> Départements</a></li>
+                    <li><a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
+                    <li><a href="students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
+                    <li><a href="subjects.html"><i class="fas fa-book"></i> Matières</a></li>
+                    <li><a href="grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <div class="container">
         <h1>Gestion des Étudiants</h1>
@@ -132,6 +136,37 @@
             </div>
         </section>
     </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section university-info">
+                <h3>Université du Lac Tanganyika</h3>
+                <p>Excellence académique et innovation</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Accueil</a></li>
+                    <li><a href="colleges.html">Collèges</a></li>
+                    <li><a href="departements.html">Départements</a></li>
+                    <li><a href="teachers.html">Enseignants</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +257 22 22 22 22</li>
+                    <li><i class="fas fa-envelope"></i> info@ult.edu.bi</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Bujumbura, Burundi</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Université du Lac Tanganyika. Développé par 
+                <a href="#">Ishimwe Audiel</a> et <a href="#">Estime Irankunda</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="../assets/js/utils.js"></script>
     <script type="module" src="../assets/js/firebase-config.js"></script>

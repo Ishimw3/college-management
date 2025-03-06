@@ -1,0 +1,143 @@
+/* Header/Navigation */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
+    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.2);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+nav ul {
+    padding: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+nav li a {
+    white-space: nowrap;
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    nav ul {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem;
+    }
+
+    nav li a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .logout-btn {
+        margin-left: 0;
+    }
+}
+
+/* Footer */
+.main-footer {
+    background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
+    color: var(--light-sky);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.footer-section {
+    padding: 1rem;
+}
+
+.footer-section h3 {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--rust);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--light-sky);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.university-info {
+    text-align: center;
+    padding: 1rem;
+}
+
+.university-info img {
+    max-width: 150px;
+    margin-bottom: 1rem;
+}
+
+.copyright {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--charcoal);
+    color: var(--light-sky);
+    font-size: 0.9rem;
+}
+
+.copyright a {
+    color: var(--sky-blue);
+    text-decoration: none;
+}
+
+.copyright a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
