@@ -17,7 +17,7 @@ class AuthManager {
         // Check if user is already logged in
         auth.onAuthStateChanged(user => {
             if (user && window.location.pathname.includes('login.html')) {
-                router.redirectToDashboard();
+                router.redirectToDashboard(); 
             }
         });
     }
