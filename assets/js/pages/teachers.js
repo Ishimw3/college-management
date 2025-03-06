@@ -93,6 +93,11 @@ class TeacherManager {
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ajout en cours...';
 
         try {
+            // Check authentication before adding
+            if (!auth.currentUser) {
+                throw new Error('Please login to add teachers');
+            }
+
             const teacherData = {
                 lastName: this.form.nom.value,
                 firstName: this.form.prenom.value,

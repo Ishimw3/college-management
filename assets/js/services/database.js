@@ -1,4 +1,4 @@
-import { db } from '../firebase-config.js';
+import { auth, db } from '../firebase-config.js';
 import { 
     collection, 
     addDoc, 
@@ -20,6 +20,41 @@ import {
 export class DatabaseService {
     static ITEMS_PER_PAGE = 10;
     static listeners = new Map();
+
+    constructor(collectionName) {
+        this.collectionName = collectionName;
+        this.listeners = new Map();
+    }
+
+    checkAuth() {
+        if (!auth.currentUser) {
+            throw new Error('User must be authenticated');
+        }
+    }
+
+    async add(data) {
+        try {
+            this.checkAuth();
+            const docRef = await addDoc(collection(db, this.collectionName), {
+                ...data,
+                createdBy: auth.currentUser.uid,
+                createdAt: new Date().toISOString()
+            });
+            return docRef.id;
+        } catch (error) {
+            console.error(`Error adding ${this.collectionName}:`, error);
+            throw error;
+        }
+    }
+
+    handleError(error) {
+        if (error.code === 'permission-denied') {
+            console.error('Permission denied. Please check if you are logged in.');
+            // Optionally redirect to login
+            window.location.href = '/college-management/login.html';
+        }
+        throw error;
+    }
 
     // Network status management
     static async goOffline() {
