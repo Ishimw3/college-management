@@ -1,5 +1,4 @@
 import { auth } from '../firebase-config.js';
-import { DatabaseService } from '../services/database.js';
 import router from '../router.js';
 import { collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 

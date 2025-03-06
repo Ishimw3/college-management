@@ -38,7 +38,9 @@ class Router {
         if (!window.location.pathname.includes('login.html')) {
             const currentPath = this.getCurrentPath();
             sessionStorage.setItem('redirectUrl', currentPath);
-            window.location.replace(`${this.basePath}/login.html`);
+            const loginUrl = `${this.basePath}/login.html`;
+            console.log('Redirecting to:', loginUrl);
+            window.location.replace(loginUrl);
         }
     }
 
@@ -52,11 +54,14 @@ class Router {
 
     async logout() {
         try {
+            console.log('Logging out...');
             await signOut(auth);
             sessionStorage.clear();
+            localStorage.clear(); // Also clear localStorage
             this.redirectToLogin();
         } catch (error) {
-            console.error('Erreur lors de la déconnexion:', error);
+            console.error('Logout error:', error);
+            throw error; // Rethrow to handle in UI
         }
     }
 }

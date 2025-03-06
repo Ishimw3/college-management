@@ -196,13 +196,12 @@
         </div>
     </footer>
 
-    <!-- Remplacer les deux scripts module par un seul -->
+    <!-- Replace the module script -->
     <script type="module">
-        import { auth } from './assets/js/firebase-config.js';
+        import { auth, db } from './assets/js/firebase-config.js';
         import router from './assets/js/router.js';
-        import { db } from './assets/js/firebase-config.js';
         
-        // Vérification immédiate de l'authentification
+        // Single authentication check
         auth.onAuthStateChanged(async user => {
             if (!user) {
                 router.redirectToLogin();
@@ -212,7 +211,6 @@
             console.log('User logged in:', user.email);
             
             try {
-                // Import et initialisation du dashboard après authentification
                 const { default: DashboardManager } = await import('./assets/js/pages/dashboard.js');
                 new DashboardManager(db);
             } catch (error) {
@@ -220,28 +218,14 @@
             }
         });
 
-        // Gestion de la déconnexion
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                try {
-                    await router.logout();
-                } catch (error) {
-                    console.error('Erreur de déconnexion:', error);
-                }
-            });
-        }
-
-        // Gestion des dropdowns sur mobile
-        document.querySelectorAll('.dropdown > a').forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const dropdown = trigger.parentElement;
-                    dropdown.classList.toggle('active');
-                }
-            });
+        // Logout handler
+        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await router.logout();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
         });
     </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>
