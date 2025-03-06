@@ -196,36 +196,42 @@
         </div>
     </footer>
 
+    <!-- Remplacer les deux scripts module par un seul -->
     <script type="module">
-        import { auth, router, DatabaseService } from './assets/js/firebase-config.js';
-        window.dbService = DatabaseService;
-
-        // Wait for auth to be ready before loading dashboard
+        import { auth } from './assets/js/firebase-config.js';
+        import router from './assets/js/router.js';
+        import { db } from './assets/js/firebase-config.js';
+        
+        // Vérification immédiate de l'authentification
         auth.onAuthStateChanged(async user => {
             if (!user) {
                 router.redirectToLogin();
-            } else {
-                console.log('User logged in:', user.email);
-                // Import and initialize dashboard only after auth is confirmed
+                return;
+            }
+            
+            console.log('User logged in:', user.email);
+            
+            try {
+                // Import et initialisation du dashboard après authentification
                 const { default: DashboardManager } = await import('./assets/js/pages/dashboard.js');
-                new DashboardManager();
+                new DashboardManager(db);
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
             }
         });
 
-        // Logout handler
-        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
-            e.preventDefault();
-            try {
-                DatabaseService.removeListener('colleges');
-                DatabaseService.removeListener('departments');
-                DatabaseService.removeListener('teachers');
-                DatabaseService.removeListener('students');
-                DatabaseService.removeListener('grades');
-                await router.logout();
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        });
+        // Gestion de la déconnexion
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                try {
+                    await router.logout();
+                } catch (error) {
+                    console.error('Erreur de déconnexion:', error);
+                }
+            });
+        }
 
         // Gestion des dropdowns sur mobile
         document.querySelectorAll('.dropdown > a').forEach(trigger => {
@@ -236,34 +242,6 @@
                     dropdown.classList.toggle('active');
                 }
             });
-        });
-    </script>
-    <script type="module">
-        import { auth } from './assets/js/firebase-config.js';
-        import router from './assets/js/router.js';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Vérifier l'authentification
-            auth.onAuthStateChanged(user => {
-                if (!user) {
-                    router.redirectToLogin();
-                    return;
-                }
-                console.log('User logged in:', user.email);
-            });
-
-            // Gérer la déconnexion
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    try {
-                        await router.logout();
-                    } catch (error) {
-                        console.error('Erreur de déconnexion:', error);
-                    }
-                });
-            }
         });
     </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>
