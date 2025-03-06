@@ -4,9 +4,9 @@ import router from '../router.js';
 
 class DashboardManager {
     constructor() {
+        console.log('Initializing Dashboard Manager'); // Debug log
         this.initializeElements();
-        this.initializeDashboard();
-        this.loadInitialData(); // Add this line to immediately load data
+        this.loadInitialData();
     }
 
     initializeElements() {
@@ -20,39 +20,10 @@ class DashboardManager {
         this.activityList = document.querySelector('.activity-list');
     }
 
-    async initializeDashboard() {
-        try {
-            // Set up real-time listeners for collections
-            DatabaseService.addCollectionListener('colleges', (colleges) => {
-                this.updateStats({ collegesCount: colleges.length });
-            });
-
-            DatabaseService.addCollectionListener('departments', (departments) => {
-                this.updateStats({ departmentsCount: departments.length });
-            });
-
-            DatabaseService.addCollectionListener('teachers', (teachers) => {
-                this.updateStats({ teachersCount: teachers.length });
-            });
-
-            DatabaseService.addCollectionListener('students', (students) => {
-                this.updateStats({ studentsCount: students.length });
-            });
-
-            DatabaseService.addCollectionListener('grades', (grades) => {
-                const averageGrade = this.calculateAverageGrade(grades);
-                this.updateStats({ averageGrade });
-                this.updateRecentActivities([...grades]);
-            });
-
-        } catch (error) {
-            console.error('Error initializing dashboard:', error);
-            this.showError('Erreur lors du chargement du tableau de bord');
-        }
-    }
-
     async loadInitialData() {
         try {
+            console.log('Loading initial data...'); // Debug log
+            
             // Load all data at once
             const [colleges, departments, teachers, students, grades] = await Promise.all([
                 DatabaseService.getColleges(),
@@ -61,6 +32,14 @@ class DashboardManager {
                 DatabaseService.getStudents(),
                 DatabaseService.getAllGrades()
             ]);
+
+            console.log('Data loaded:', { // Debug log
+                colleges: colleges.length,
+                departments: departments.length,
+                teachers: teachers.length,
+                students: students.length,
+                grades: grades.length
+            });
 
             // Update stats immediately
             this.updateStats({
@@ -71,22 +50,50 @@ class DashboardManager {
                 averageGrade: this.calculateAverageGrade(grades)
             });
 
-            // Update recent activities
+            // Sort all activities by date
             const allActivities = [
                 ...colleges.map(c => ({ ...c, type: 'college' })),
                 ...departments.map(d => ({ ...d, type: 'department' })),
                 ...teachers.map(t => ({ ...t, type: 'teacher' })),
                 ...students.map(s => ({ ...s, type: 'student' })),
                 ...grades.map(g => ({ ...g, type: 'grade' }))
-            ];
+            ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-            // Sort by createdAt date and update activities
+            // Update activities list
             this.updateRecentActivities(allActivities);
+
+            // Set up real-time listeners after initial load
+            this.initializeRealTimeListeners();
 
         } catch (error) {
             console.error('Error loading initial data:', error);
             this.showError('Erreur lors du chargement des données initiales');
         }
+    }
+
+    initializeRealTimeListeners() {
+        // Set up real-time listeners for collections
+        DatabaseService.addCollectionListener('colleges', (colleges) => {
+            this.updateStats({ collegesCount: colleges.length });
+        });
+
+        DatabaseService.addCollectionListener('departments', (departments) => {
+            this.updateStats({ departmentsCount: departments.length });
+        });
+
+        DatabaseService.addCollectionListener('teachers', (teachers) => {
+            this.updateStats({ teachersCount: teachers.length });
+        });
+
+        DatabaseService.addCollectionListener('students', (students) => {
+            this.updateStats({ studentsCount: students.length });
+        });
+
+        DatabaseService.addCollectionListener('grades', (grades) => {
+            this.updateStats({ 
+                averageGrade: this.calculateAverageGrade(grades)
+            });
+        });
     }
 
     updateStats(stats) {
@@ -160,12 +167,18 @@ class DashboardManager {
 }
 
 // Initialize dashboard when DOM is loaded
+const initDashboard = () => {
+    console.log('DOM loaded, initializing dashboard...'); // Debug log
+    const dashboard = new DashboardManager();
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication before initializing
     auth.onAuthStateChanged(user => {
         if (user) {
-            new DashboardManager();
+            console.log('User authenticated, creating dashboard...'); // Debug log
+            initDashboard();
         } else {
+            console.log('User not authenticated, redirecting...'); // Debug log
             router.redirectToLogin();
         }
     });
