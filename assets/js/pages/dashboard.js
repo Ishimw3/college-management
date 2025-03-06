@@ -6,6 +6,7 @@ class DashboardManager {
     constructor() {
         this.initializeElements();
         this.initializeDashboard();
+        this.loadInitialData(); // Add this line to immediately load data
     }
 
     initializeElements() {
@@ -47,6 +48,44 @@ class DashboardManager {
         } catch (error) {
             console.error('Error initializing dashboard:', error);
             this.showError('Erreur lors du chargement du tableau de bord');
+        }
+    }
+
+    async loadInitialData() {
+        try {
+            // Load all data at once
+            const [colleges, departments, teachers, students, grades] = await Promise.all([
+                DatabaseService.getColleges(),
+                DatabaseService.getDepartments(),
+                DatabaseService.getTeachers(),
+                DatabaseService.getStudents(),
+                DatabaseService.getAllGrades()
+            ]);
+
+            // Update stats immediately
+            this.updateStats({
+                collegesCount: colleges.length,
+                departmentsCount: departments.length,
+                teachersCount: teachers.length,
+                studentsCount: students.length,
+                averageGrade: this.calculateAverageGrade(grades)
+            });
+
+            // Update recent activities
+            const allActivities = [
+                ...colleges.map(c => ({ ...c, type: 'college' })),
+                ...departments.map(d => ({ ...d, type: 'department' })),
+                ...teachers.map(t => ({ ...t, type: 'teacher' })),
+                ...students.map(s => ({ ...s, type: 'student' })),
+                ...grades.map(g => ({ ...g, type: 'grade' }))
+            ];
+
+            // Sort by createdAt date and update activities
+            this.updateRecentActivities(allActivities);
+
+        } catch (error) {
+            console.error('Error loading initial data:', error);
+            this.showError('Erreur lors du chargement des données initiales');
         }
     }
 
@@ -93,13 +132,21 @@ class DashboardManager {
     }
 
     getActivityDescription(item) {
-        if ('value' in item) {
-            return `Note ajoutée: ${item.value}/20`;
+        const date = new Date(item.createdAt).toLocaleDateString('fr-FR');
+        switch (item.type) {
+            case 'college':
+                return `Collège "${item.name}" ajouté`;
+            case 'department':
+                return `Département "${item.name}" créé`;
+            case 'teacher':
+                return `Enseignant ${item.firstName} ${item.lastName} ajouté`;
+            case 'student':
+                return `Étudiant ${item.firstName} ${item.lastName} inscrit`;
+            case 'grade':
+                return `Note de ${item.value}/20 ajoutée`;
+            default:
+                return 'Nouvelle activité';
         }
-        if ('name' in item) {
-            return `${item.name} ajouté(e)`;
-        }
-        return 'Nouvelle activité';
     }
 
     showError(message) {
