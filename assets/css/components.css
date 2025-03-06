@@ -37,53 +37,67 @@ nav li a {
     white-space: nowrap;
 }
 
-/* Dropdown Styles */
+/* Dropdown Styles - Updated */
 .dropdown {
     position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
+}
+
+.dropdown > a {
+    pointer-events: none;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
 }
 
 .dropdown > a::after {
     content: '▼';
-    font-size: 0.8em;
+    font-size: 0.7em;
     margin-left: 0.5rem;
+    opacity: 0.7;
+}
+
+.dropdown > a:hover {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--charcoal);
     min-width: 200px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    background: var(--charcoal);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-radius: 0 0 4px 4px;
-    z-index: 101;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .dropdown-content a {
     padding: 0.8rem 1rem;
+    color: var(--light-sky);
     display: block;
-    transition: background 0.3s;
+    transition: all 0.2s ease;
 }
 
 .dropdown-content a:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 1.5rem;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive adjustments */
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     nav ul {
         justify-content: flex-start;
@@ -101,20 +115,33 @@ nav li a {
         margin-left: 0;
     }
 
+    .dropdown > a {
+        pointer-events: auto; /* Réactiver pour mobile */
+        background: none;
+        padding: 0.8rem;
+    }
+
     .dropdown-content {
         position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
         display: none;
-        background: rgba(255,255,255,0.05);
-        min-width: unset;
         box-shadow: none;
+        background: rgba(255, 255, 255, 0.05);
+        padding-left: 1rem;
     }
 
     .dropdown.active .dropdown-content {
         display: block;
     }
 
-    .dropdown > a::after {
-        margin-left: auto;
+    .dropdown-content a {
+        padding: 0.5rem 1rem;
+    }
+
+    .dropdown-content a:hover {
+        padding-left: 1rem;
     }
 }
 
