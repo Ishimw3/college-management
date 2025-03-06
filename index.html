@@ -36,12 +36,31 @@
             <nav>
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
-                    <li><a href="pages/colleges.html"><i class="fas fa-school"></i> Collèges</a></li>
-                    <li><a href="pages/departements.html"><i class="fas fa-building"></i> Départements</a></li>
-                    <li><a href="pages/teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a></li>
-                    <li><a href="pages/students.html"><i class="fas fa-user-graduate"></i> Étudiants</a></li>
-                    <li><a href="pages/subjects.html"><i class="fas fa-book"></i> Matières</a></li>
-                    <li><a href="pages/grades.html"><i class="fas fa-clipboard-list"></i> Notes</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-university"></i> Établissements</a>
+                        <div class="dropdown-content">
+                            <a href="pages/colleges.html"><i class="fas fa-school"></i> Collèges</a>
+                            <a href="pages/departements.html"><i class="fas fa-building"></i> Départements</a>
+                        </div>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-users"></i> Personnel</a>
+                        <div class="dropdown-content">
+                            <a href="pages/teachers.html"><i class="fas fa-chalkboard-teacher"></i> Enseignants</a>
+                            <a href="pages/subjects.html"><i class="fas fa-book"></i> Matières</a>
+                        </div>
+                    </li>
+                    
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-user-graduate"></i> Étudiants</a>
+                        <div class="dropdown-content">
+                            <a href="pages/students.html"><i class="fas fa-user"></i> Liste des étudiants</a>
+                            <a href="pages/grades.html"><i class="fas fa-clipboard-list"></i> Notes</a>
+                        </div>
+                    </li>
+                    
                     <li class="logout-btn">
                         <a href="#" id="logoutBtn">
                             <i class="fas fa-sign-out-alt"></i> Déconnexion
@@ -206,6 +225,17 @@
             } catch (error) {
                 console.error('Logout error:', error);
             }
+        });
+
+        // Gestion des dropdowns sur mobile
+        document.querySelectorAll('.dropdown > a').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = trigger.parentElement;
+                    dropdown.classList.toggle('active');
+                }
+            });
         });
     </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>

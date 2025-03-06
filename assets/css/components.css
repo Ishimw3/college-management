@@ -4,28 +4,86 @@
     top: 0;
     z-index: 100;
     background: linear-gradient(135deg, var(--charcoal), var(--light-charcoal));
-    box-shadow: 0 4px 12px rgba(42, 49, 50, 0.2);
+    box-shadow: 0 2px 8px rgba(42, 49, 50, 0.2);
+    height: 60px;
 }
 
+/* Navigation with Dropdowns */
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1rem;
+    height: 100%;
 }
 
 nav ul {
-    padding: 1.2rem;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
     align-items: center;
+    height: 100%;
+    padding: 0 1rem;
+    gap: 1rem;
+}
+
+nav li {
+    position: relative;
 }
 
 nav li a {
+    padding: 0.5rem 1rem;
+    color: var(--light-sky);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     white-space: nowrap;
 }
 
-/* Responsive Navigation */
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown > a::after {
+    content: '▼';
+    font-size: 0.8em;
+    margin-left: 0.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--charcoal);
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-radius: 0 0 4px 4px;
+    z-index: 101;
+}
+
+.dropdown-content a {
+    padding: 0.8rem 1rem;
+    display: block;
+    transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     nav ul {
         justify-content: flex-start;
@@ -41,6 +99,22 @@ nav li a {
 
     .logout-btn {
         margin-left: 0;
+    }
+
+    .dropdown-content {
+        position: static;
+        display: none;
+        background: rgba(255,255,255,0.05);
+        min-width: unset;
+        box-shadow: none;
+    }
+
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+
+    .dropdown > a::after {
+        margin-left: auto;
     }
 }
 
