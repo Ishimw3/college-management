@@ -2,9 +2,13 @@ import { auth } from '../firebase-config.js';
 import { DatabaseService } from '../services/database.js';
 import router from '../router.js';
 
-class DashboardManager {
+export default class DashboardManager {
     constructor() {
         console.log('Initializing Dashboard Manager'); // Debug log
+        if (!document.querySelector('.dashboard-container')) {
+            console.error('Dashboard container not found');
+            return;
+        }
         this.initializeElements();
         this.loadInitialData();
     }
@@ -23,6 +27,19 @@ class DashboardManager {
     async loadInitialData() {
         try {
             console.log('Loading initial data...'); // Debug log
+            
+            // Clear any existing data
+            this.updateStats({
+                collegesCount: 0,
+                departmentsCount: 0,
+                teachersCount: 0,
+                studentsCount: 0,
+                averageGrade: 0
+            });
+            
+            if (this.activityList) {
+                this.activityList.innerHTML = '<li>Loading...</li>';
+            }
             
             // Load all data at once
             const [colleges, departments, teachers, students, grades] = await Promise.all([
@@ -57,7 +74,8 @@ class DashboardManager {
                 ...teachers.map(t => ({ ...t, type: 'teacher' })),
                 ...students.map(s => ({ ...s, type: 'student' })),
                 ...grades.map(g => ({ ...g, type: 'grade' }))
-            ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            ].filter(item => item.createdAt)
+             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
             // Update activities list
             this.updateRecentActivities(allActivities);

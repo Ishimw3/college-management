@@ -1,22 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialisation des données
-    let data = {
-        colleges: [],
-        departements: [],
-        enseignants: [],
-        etudiants: [],
-        matieres: [],
-        notes: []
-    };
-
-    // Initialisation
+    // Remove the local data initialization since we're using Firebase
     const initialize = () => {
-        DataManager.loadData();
         UIManager.initializeForms();
         UIManager.initializeTables();
         UIManager.setupPrintButtons();
         UIManager.initializeDetailViews();
-        UIManager.updateAverages();
     };
 
     initialize();
