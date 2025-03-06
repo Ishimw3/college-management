@@ -238,6 +238,34 @@
             });
         });
     </script>
+    <script type="module">
+        import { auth } from './assets/js/firebase-config.js';
+        import router from './assets/js/router.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Vérifier l'authentification
+            auth.onAuthStateChanged(user => {
+                if (!user) {
+                    router.redirectToLogin();
+                    return;
+                }
+                console.log('User logged in:', user.email);
+            });
+
+            // Gérer la déconnexion
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        await router.logout();
+                    } catch (error) {
+                        console.error('Erreur de déconnexion:', error);
+                    }
+                });
+            }
+        });
+    </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>
 </body>
 </html>

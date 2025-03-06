@@ -9,7 +9,6 @@ class Router {
             private: ['index.html', 'pages/']
         };
         
-        // Only initialize auth listener
         this.initializeAuth();
     }
 
@@ -20,6 +19,8 @@ class Router {
 
             if (!user && !this.isPublicRoute(currentPath)) {
                 this.redirectToLogin();
+            } else if (user && this.isPublicRoute(currentPath)) {
+                this.redirectToDashboard();
             }
         });
     }
@@ -60,6 +61,5 @@ class Router {
     }
 }
 
-// Create and export router instance
 const router = new Router();
 export default router;
