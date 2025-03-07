@@ -117,19 +117,24 @@
                         <div class="chart-value" data-stat="averageGrade">0.0</div>
                         <div class="chart-label">Moyenne Générale</div>
                     </div>
+                    <div class="grade-distribution">
+                        <div class="grade-bar">
+                            <div class="progress" id="gradeProgress"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="quick-access-card">
                 <h3><i class="fas fa-calendar-alt"></i> Activités Récentes</h3>
-                <ul class="activity-list">
-                    <!-- Activités chargées dynamiquement -->
+                <ul class="activity-list" id="activityList">
+                    <li class="loading-activity">Chargement des activités...</li>
                 </ul>
             </div>
         </div>
 
-         <!-- Barre de recherche déplacée en haut -->
-         <div class="search-section">
+        <!-- Barre de recherche -->
+        <div class="search-section">
             <div class="search-container">
                 <form id="resourceSearchForm" onsubmit="return false;">
                     <input type="text" id="searchInput" placeholder="Rechercher des ressources...">
@@ -139,6 +144,7 @@
                 </form>
             </div>
         </div>
+
         <!-- Ressources -->
         <div class="resources-grid">
             <div class="resource-card open-library">
@@ -147,14 +153,12 @@
                     <!-- Populated by API -->
                 </div>
             </div>
-            
             <div class="resource-card wikipedia">
                 <h3><i class="fab fa-wikipedia-w"></i> Articles Éducatifs</h3>
                 <div id="wikipedia-content" class="api-content">
                     <!-- Populated by API -->
                 </div>
             </div>
-            
             <div class="resource-card quotes">
                 <h3><i class="fas fa-quote-right"></i> Citations Inspirantes</h3>
                 <div id="quotes-content" class="api-content">
@@ -200,6 +204,7 @@
     <script type="module">
         import { auth, db } from './assets/js/firebase-config.js';
         import router from './assets/js/router.js';
+        import { DashboardStats } from './assets/js/dashboard-stats.js';
         
         // Single authentication check
         auth.onAuthStateChanged(async user => {
@@ -213,6 +218,7 @@
             try {
                 const { default: DashboardManager } = await import('./assets/js/pages/dashboard.js');
                 new DashboardManager(db);
+                new DashboardStats(db); // Initialiser les statistiques
             } catch (error) {
                 console.error('Error loading dashboard:', error);
             }

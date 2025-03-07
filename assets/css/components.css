@@ -242,3 +242,48 @@ nav li a {
         transform: translateX(-50%);
     }
 }
+
+/* Additional Styles */
+.grade-distribution {
+    margin-top: 1rem;
+}
+
+.grade-bar {
+    background: #f0f0f0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: #4CAF50;
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.loading-activity {
+    text-align: center;
+    color: #666;
+    padding: 1rem;
+}
+
+.error-activity {
+    color: #dc3545;
+    text-align: center;
+    padding: 1rem;
+}
