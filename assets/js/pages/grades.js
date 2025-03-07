@@ -1,73 +1,85 @@
+import { auth } from '../firebase-config.js';
 import { DatabaseService } from '../services/database.js';
+import router from '../router.js';
 
 class GradesManager {
     constructor() {
-        this.form = document.querySelector('.form-section form');
-        this.gradesList = document.querySelector('tbody');
-        this.initializeEventListeners();
-        this.loadInitialData();
+        this.initializeAuth();
+    }
+
+    async initializeAuth() {
+        try {
+            await DatabaseService.verifyAuth();
+            await this.loadInitialData();
+        } catch (error) {
+            console.error('Authentication error:', error);
+            router.redirectToLogin();
+        }
     }
 
     async loadInitialData() {
         try {
-            // Charger les données de la base de données
-            const [students, subjects, grades] = await Promise.all([
+            const [students, subjects] = await Promise.all([
                 DatabaseService.getStudents(),
-                DatabaseService.getSubjects(),
-                DatabaseService.getAllGrades()
+                DatabaseService.getSubjects()
             ]);
-
-            console.log('Loaded data:', { students, subjects, grades }); // Debug
-
-            // Vider et remplir le select des étudiants
-            const studentSelect = document.getElementById('etudiant');
-            const filterStudentSelect = document.getElementById('filter-etudiant');
-            
-            studentSelect.innerHTML = '<option value="">Sélectionner un étudiant</option>';
-            filterStudentSelect.innerHTML = '<option value="">Tous les étudiants</option>';
-            
-            if (students && students.length > 0) {
-                students.forEach(student => {
-                    const option = document.createElement('option');
-                    option.value = student.id;
-                    option.textContent = `${student.lastName} ${student.firstName}`;
-                    studentSelect.appendChild(option);
-                    filterStudentSelect.appendChild(option.cloneNode(true));
-                });
-            }
-
-            // Vider et remplir le select des matières
-            const subjectSelect = document.getElementById('matiere');
-            const filterSubjectSelect = document.getElementById('filter-matiere');
-            
-            subjectSelect.innerHTML = '<option value="">Sélectionner une matière</option>';
-            filterSubjectSelect.innerHTML = '<option value="">Toutes les matières</option>';
-            
-            if (subjects && subjects.length > 0) {
-                subjects.forEach(subject => {
-                    const option = document.createElement('option');
-                    option.value = subject.id;
-                    option.textContent = subject.name;
-                    subjectSelect.appendChild(option);
-                    filterSubjectSelect.appendChild(option.cloneNode(true));
-                });
-            }
-
-            // Créer les maps pour référence rapide
-            this.studentsMap = new Map(students.map(s => [s.id, s]));
-            this.subjectsMap = new Map(subjects.map(s => [s.id, s]));
-
-            // Vider et remplir la liste des notes
-            this.gradesList.innerHTML = '';
-            if (grades && grades.length > 0) {
-                this.displayGrades(grades);
-                this.updateStatistics(grades);
-            }
-
+            this.populateSelects(students, subjects);
+            await this.loadGrades();
         } catch (error) {
             console.error('Error loading initial data:', error);
-            this.showNotification('Erreur lors du chargement des données', 'error');
+            this.showError('Erreur de chargement des données');
         }
+    }
+
+    async loadGrades() {
+        try {
+            const grades = await DatabaseService.getAllGrades();
+            this.displayGrades(grades);
+            this.updateStatistics(grades);
+        } catch (error) {
+            console.error('Error loading grades:', error);
+            this.showError('Erreur de chargement des notes');
+        }
+    }
+
+    populateSelects(students, subjects) {
+        // Vider et remplir le select des étudiants
+        const studentSelect = document.getElementById('etudiant');
+        const filterStudentSelect = document.getElementById('filter-etudiant');
+        
+        studentSelect.innerHTML = '<option value="">Sélectionner un étudiant</option>';
+        filterStudentSelect.innerHTML = '<option value="">Tous les étudiants</option>';
+        
+        if (students && students.length > 0) {
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = `${student.lastName} ${student.firstName}`;
+                studentSelect.appendChild(option);
+                filterStudentSelect.appendChild(option.cloneNode(true));
+            });
+        }
+
+        // Vider et remplir le select des matières
+        const subjectSelect = document.getElementById('matiere');
+        const filterSubjectSelect = document.getElementById('filter-matiere');
+        
+        subjectSelect.innerHTML = '<option value="">Sélectionner une matière</option>';
+        filterSubjectSelect.innerHTML = '<option value="">Toutes les matières</option>';
+        
+        if (subjects && subjects.length > 0) {
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = subject.name;
+                subjectSelect.appendChild(option);
+                filterSubjectSelect.appendChild(option.cloneNode(true));
+            });
+        }
+
+        // Créer les maps pour référence rapide
+        this.studentsMap = new Map(students.map(s => [s.id, s]));
+        this.subjectsMap = new Map(subjects.map(s => [s.id, s]));
     }
 
     async loadAllGrades() {
@@ -275,6 +287,7 @@ class GradesManager {
     }
 }
 
+// Initialize only after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     new GradesManager();
 });

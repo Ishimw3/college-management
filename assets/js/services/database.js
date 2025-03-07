@@ -157,8 +157,8 @@ export class DatabaseService {
             return departments;
         } catch (error) {
             console.error("Error getting departments:", error);
-            if (error.code === 'permission-denied') {
-                window.location.href = '/college-management/login.html';
+            if (error.message === 'Authentication required') {
+                window.location.replace('/college-management/login.html');
             }
             throw error;
         }
@@ -217,8 +217,8 @@ export class DatabaseService {
             return teachers;
         } catch (error) {
             console.error("Error getting teachers:", error);
-            if (error.code === 'permission-denied') {
-                window.location.href = '/college-management/login.html';
+            if (error.message === 'Authentication required') {
+                window.location.replace('/college-management/login.html');
             }
             throw error;
         }
@@ -343,8 +343,8 @@ export class DatabaseService {
             return subjects;
         } catch (error) {
             console.error("Error getting subjects:", error);
-            if (error.code === 'permission-denied') {
-                window.location.href = '/college-management/login.html';
+            if (error.message === 'Authentication required') {
+                window.location.replace('/college-management/login.html');
             }
             throw error;
         }
@@ -405,9 +405,15 @@ export class DatabaseService {
     }
 
     static async verifyAuth() {
-        if (!auth.currentUser) {
-            throw new Error('Authentication required');
-        }
-        return auth.currentUser;
+        return new Promise((resolve, reject) => {
+            const unsubscribe = auth.onAuthStateChanged(user => {
+                unsubscribe();
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject(new Error('Authentication required'));
+                }
+            });
+        });
     }
 }
