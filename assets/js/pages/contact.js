@@ -19,9 +19,27 @@ class ContactManager {
 
     setupWhatsApp() {
         const whatsappButton = document.getElementById('whatsappButton');
-        if (whatsappButton) {
-            whatsappButton.href = `https://wa.me/257xxxxxxxx?text=${encodeURIComponent('Bonjour, je vous contacte depuis le système de gestion des collèges.')}`;
-        }
+        const whatsappNumber = document.getElementById('whatsappNumber');
+        const whatsappMessage = document.getElementById('whatsappMessage');
+
+        whatsappButton?.addEventListener('click', () => {
+            if (!whatsappNumber.value) {
+                this.showNotification('Veuillez entrer un numéro WhatsApp', 'error');
+                return;
+            }
+
+            // Nettoyer le numéro (garder uniquement les chiffres et le +)
+            const cleanNumber = whatsappNumber.value.replace(/[^\d+]/g, '');
+            
+            // Construire le message
+            const message = whatsappMessage.value || 'Bonjour, je vous contacte depuis le système de gestion des collèges.';
+            
+            // Créer le lien WhatsApp
+            const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Ouvrir WhatsApp dans un nouvel onglet
+            window.open(whatsappUrl, '_blank');
+        });
     }
 
     setupStripe() {

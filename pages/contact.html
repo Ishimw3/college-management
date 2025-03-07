@@ -82,9 +82,20 @@
                 <!-- WhatsApp Button -->
                 <div class="whatsapp-section">
                     <h3>Contactez-nous sur WhatsApp</h3>
-                    <a href="#" id="whatsappButton" class="whatsapp-button">
-                        <i class="fab fa-whatsapp"></i> Discuter sur WhatsApp
-                    </a>
+                    <div class="whatsapp-form">
+                        <div class="form-group">
+                            <label for="whatsappNumber">Numéro WhatsApp:</label>
+                            <input type="tel" id="whatsappNumber" placeholder="Ex: +257xxxxxxxx" required>
+                            <div class="form-help">Format international (ex: +257)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsappMessage">Message:</label>
+                            <textarea id="whatsappMessage" rows="3" placeholder="Votre message WhatsApp"></textarea>
+                        </div>
+                        <button type="button" id="whatsappButton" class="whatsapp-button">
+                            <i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp
+                        </button>
+                    </div>
                 </div>
             </section>
 

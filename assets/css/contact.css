@@ -37,6 +37,39 @@
     transform: translateY(-2px);
 }
 
+/* WhatsApp Form */
+.whatsapp-form {
+    background: #f0f8f0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.whatsapp-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.whatsapp-form input,
+.whatsapp-form textarea {
+    border: 1px solid #25D366;
+}
+
+.whatsapp-form input:focus,
+.whatsapp-form textarea:focus {
+    box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.form-help {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
 /* Payment Section */
 .payment-options {
     display: grid;
