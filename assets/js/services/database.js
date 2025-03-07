@@ -329,17 +329,18 @@ export class DatabaseService {
 
     static async getSubjects() {
         try {
-            await this.verifyAuth();
+            const user = await this.verifyAuth();
+            console.log('Getting subjects as:', user.email);
             const querySnapshot = await getDocs(collection(db, "subjects"));
-            return querySnapshot.docs.map(doc => ({
+            const subjects = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
+            return subjects;
         } catch (error) {
             console.error("Error getting subjects:", error);
-            // Only redirect if it's truly an auth error
-            if (error.message === 'Authentication required') {
-                window.location.replace('/college-management/login.html');
+            if (error.code === 'permission-denied') {
+                await this.handlePermissionError();
             }
             throw error;
         }
@@ -401,19 +402,31 @@ export class DatabaseService {
 
     static async verifyAuth() {
         return new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                reject(new Error('Auth timeout'));
+            }, 5000);
+
             const unsubscribe = auth.onAuthStateChanged(user => {
+                clearTimeout(timeout);
                 unsubscribe();
                 if (user) {
                     console.log('Auth verified for:', user.email);
                     resolve(user);
                 } else {
-                    console.log('No auth found, redirecting...');
+                    console.log('No auth found');
                     reject(new Error('Authentication required'));
                 }
-            }, (error) => {
-                console.error('Auth error:', error);
-                reject(error);
             });
         });
+    }
+
+    static async handlePermissionError() {
+        console.log('Handling permission error...');
+        try {
+            await auth.signOut();
+            window.location.replace('/college-management/login.html');
+        } catch (error) {
+            console.error('Error during permission error handling:', error);
+        }
     }
 }

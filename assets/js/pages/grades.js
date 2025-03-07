@@ -37,6 +37,9 @@ export default class GradesManager {
                 DatabaseService.getStudents(),
                 DatabaseService.getSubjects()
             ]);
+            if (!students || !subjects) {
+                throw new Error('Failed to load required data');
+            }
             this.populateSelects(students, subjects);
             await this.loadGrades();
         } catch (error) {
@@ -260,6 +263,10 @@ export default class GradesManager {
             </td>
         `;
         this.gradesList.appendChild(row);
+    }
+
+    showError(message) {
+        this.showNotification(message, 'error');
     }
 
     showNotification(message, type = 'success') {
