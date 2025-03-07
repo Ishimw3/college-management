@@ -333,7 +333,8 @@ export class DatabaseService {
 
     static async getSubjects() {
         try {
-            await this.verifyAuth();
+            const user = await this.verifyAuth();
+            console.log('Fetching subjects as:', user.email);
             const querySnapshot = await getDocs(collection(db, "subjects"));
             const subjects = querySnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -409,8 +410,10 @@ export class DatabaseService {
             const unsubscribe = auth.onAuthStateChanged(user => {
                 unsubscribe();
                 if (user) {
+                    console.log('Authenticated as:', user.email);
                     resolve(user);
                 } else {
+                    console.log('No authenticated user');
                     reject(new Error('Authentication required'));
                 }
             });

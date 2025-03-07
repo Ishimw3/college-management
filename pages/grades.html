@@ -187,18 +187,24 @@
         </div>
     </footer>
 
-    <script src="../assets/js/utils.js"></script>
-    <script src="../assets/js/app.js"></script>
-    <script type="module" src="../assets/js/firebase-config.js"></script>
     <script type="module">
         import { auth } from '../assets/js/firebase-config.js';
         import router from '../assets/js/router.js';
+        import { DatabaseService } from '../assets/js/services/database.js';
 
-        // Check authentication before loading page content
-        auth.onAuthStateChanged(user => {
+        // Wait for Firebase to initialize
+        auth.onAuthStateChanged(async user => {
             if (!user) {
                 router.redirectToLogin();
                 return;
+            }
+
+            try {
+                // Initialize grades manager after auth
+                const { default: GradesManager } = await import('../assets/js/pages/grades.js');
+                new GradesManager();
+            } catch (error) {
+                console.error('Error initializing grades:', error);
             }
         });
 
@@ -211,16 +217,13 @@
                 console.error('Logout error:', error);
             }
         });
-    </script>
-    <script type="module" src="../assets/js/pages/grades.js"></script>
-    <script>
-        // Gestion des dropdowns sur mobile
+
+        // Mobile dropdown handler
         document.querySelectorAll('.dropdown > a').forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
-                    const dropdown = trigger.parentElement;
-                    dropdown.classList.toggle('active');
+                    trigger.parentElement.classList.toggle('active');
                 }
             });
         });

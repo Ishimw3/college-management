@@ -2,14 +2,28 @@ import { auth } from '../firebase-config.js';
 import { DatabaseService } from '../services/database.js';
 import router from '../router.js';
 
-class GradesManager {
+export default class GradesManager {
     constructor() {
+        this.form = document.querySelector('.form-section form');
+        this.gradesList = document.querySelector('.list-section tbody');
         this.initializeAuth();
+        this.initializeEventListeners();
     }
 
     async initializeAuth() {
         try {
-            await DatabaseService.verifyAuth();
+            // Wait for authentication
+            const user = await new Promise((resolve) => {
+                const unsubscribe = auth.onAuthStateChanged(user => {
+                    unsubscribe();
+                    resolve(user);
+                });
+            });
+
+            if (!user) {
+                throw new Error('Authentication required');
+            }
+
             await this.loadInitialData();
         } catch (error) {
             console.error('Authentication error:', error);
