@@ -1,3 +1,12 @@
+import { 
+    collection, 
+    query, 
+    orderBy, 
+    limit, 
+    getDocs, 
+    Timestamp 
+} from 'firebase/firestore';
+
 export class DashboardStats {
     constructor(db) {
         this.db = db;
@@ -5,36 +14,44 @@ export class DashboardStats {
     }
 
     async initializeStats() {
-        await this.updateAverageGrade();
-        await this.loadRecentActivities();
+        try {
+            await Promise.all([
+                this.updateAverageGrade(),
+                this.loadRecentActivities()
+            ]);
+        } catch (error) {
+            console.error('Erreur d\'initialisation:', error);
+        }
     }
 
     async updateAverageGrade() {
         try {
-            const gradesRef = this.db.collection('grades');
-            const gradesSnapshot = await gradesRef.get();
+            const gradesRef = collection(this.db, 'grades');
+            const gradesSnapshot = await getDocs(gradesRef);
             
             let totalGrade = 0;
             let count = 0;
             
             gradesSnapshot.forEach(doc => {
-                const grade = doc.data().grade;
-                if (typeof grade === 'number') {
+                const data = doc.data();
+                const grade = Number(data.grade);
+                if (!isNaN(grade)) {
                     totalGrade += grade;
                     count++;
                 }
             });
 
             const average = count > 0 ? (totalGrade / count).toFixed(2) : '0.00';
-            document.querySelector('[data-stat="averageGrade"]').textContent = average;
+            const element = document.querySelector('[data-stat="averageGrade"]');
+            if (element) element.textContent = average;
             
-            // Mettre à jour la barre de progression
             const progress = document.getElementById('gradeProgress');
             if (progress) {
                 progress.style.width = `${(average / 20) * 100}%`;
             }
         } catch (error) {
             console.error('Erreur lors du calcul de la moyenne:', error);
+            throw error;
         }
     }
 
@@ -43,43 +60,50 @@ export class DashboardStats {
             const activityList = document.getElementById('activityList');
             if (!activityList) return;
 
-            // Combiner les activités récentes de différentes collections
             const activities = [];
             
-            // Récupérer les dernières notes
-            const gradesSnapshot = await this.db.collection('grades')
-                .orderBy('timestamp', 'desc')
-                .limit(3)
-                .get();
+            // Notes récentes
+            const gradesQuery = query(
+                collection(this.db, 'grades'),
+                orderBy('timestamp', 'desc'),
+                limit(3)
+            );
             
+            const [gradesSnapshot, studentsSnapshot] = await Promise.all([
+                getDocs(gradesQuery),
+                getDocs(query(
+                    collection(this.db, 'students'),
+                    orderBy('createdAt', 'desc'),
+                    limit(3)
+                ))
+            ]);
+
             gradesSnapshot.forEach(doc => {
                 const data = doc.data();
-                activities.push({
-                    type: 'note',
-                    text: `Note ajoutée pour ${data.studentName}: ${data.grade}/20`,
-                    timestamp: data.timestamp
-                });
+                if (data.studentName && data.grade) {
+                    activities.push({
+                        type: 'note',
+                        text: `Note ajoutée pour ${data.studentName}: ${data.grade}/20`,
+                        timestamp: data.timestamp instanceof Timestamp ? 
+                            data.timestamp.toDate() : new Date()
+                    });
+                }
             });
 
-            // Récupérer les derniers étudiants ajoutés
-            const studentsSnapshot = await this.db.collection('students')
-                .orderBy('createdAt', 'desc')
-                .limit(3)
-                .get();
-            
             studentsSnapshot.forEach(doc => {
                 const data = doc.data();
-                activities.push({
-                    type: 'student',
-                    text: `Nouvel étudiant inscrit: ${data.firstName} ${data.lastName}`,
-                    timestamp: data.createdAt
-                });
+                if (data.firstName && data.lastName) {
+                    activities.push({
+                        type: 'student',
+                        text: `Nouvel étudiant inscrit: ${data.firstName} ${data.lastName}`,
+                        timestamp: data.createdAt instanceof Timestamp ? 
+                            data.createdAt.toDate() : new Date()
+                    });
+                }
             });
 
-            // Trier toutes les activités par date
             activities.sort((a, b) => b.timestamp - a.timestamp);
 
-            // Afficher les activités
             activityList.innerHTML = activities.length ? activities.map(activity => `
                 <li class="activity-item">
                     <i class="fas ${activity.type === 'note' ? 'fa-graduation-cap' : 'fa-user-plus'}"></i>
@@ -89,8 +113,7 @@ export class DashboardStats {
 
         } catch (error) {
             console.error('Erreur lors du chargement des activités:', error);
-            document.getElementById('activityList').innerHTML = 
-                '<li class="error-activity">Erreur lors du chargement des activités</li>';
+            throw error;
         }
     }
 }
