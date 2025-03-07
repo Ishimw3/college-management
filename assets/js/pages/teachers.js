@@ -1,7 +1,14 @@
+import { auth } from '../firebase-config.js';
 import { DatabaseService } from '../services/database.js';
 
 class TeacherManager {
     constructor() {
+        // Verify authentication first
+        if (!auth.currentUser) {
+            window.location.href = '/college-management/login.html';
+            return;
+        }
+
         this.form = document.querySelector('.form-section form');
         this.teachersList = document.querySelector('tbody');
         this.ficheSection = document.getElementById('fiche');
@@ -12,6 +19,12 @@ class TeacherManager {
 
     async loadDepartmentsAndSubjects() {
         try {
+            // Add loading state
+            const loadingEl = document.createElement('div');
+            loadingEl.className = 'loading';
+            loadingEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Chargement...';
+            document.body.appendChild(loadingEl);
+
             const [departments, subjects] = await Promise.all([
                 DatabaseService.getDepartments(),
                 DatabaseService.getSubjects()
@@ -37,6 +50,11 @@ class TeacherManager {
         } catch (error) {
             console.error('Error loading departments and subjects:', error);
             this.showNotification('Erreur lors du chargement des données', 'error');
+            if (error.message === 'Authentication required') {
+                window.location.href = '/college-management/login.html';
+            }
+        } finally {
+            document.querySelector('.loading')?.remove();
         }
     }
 

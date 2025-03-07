@@ -147,19 +147,19 @@ export class DatabaseService {
 
     static async getDepartments() {
         try {
-            const querySnapshot = await getDocs(query(
-                collection(db, "departments"),
-                orderBy("createdAt", "desc"),
-                limit(this.ITEMS_PER_PAGE)
-            ));
+            await this.verifyAuth();
+            const querySnapshot = await getDocs(collection(db, "departments"));
             const departments = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            console.log('Fetched departments:', departments); // Debug
+            console.log('Fetched departments:', departments);
             return departments;
         } catch (error) {
-            console.error("Error getting all departments:", error);
+            console.error("Error getting departments:", error);
+            if (error.code === 'permission-denied') {
+                window.location.href = '/college-management/login.html';
+            }
             throw error;
         }
     }
@@ -207,15 +207,19 @@ export class DatabaseService {
 
     static async getTeachers() {
         try {
+            await this.verifyAuth();
             const querySnapshot = await getDocs(collection(db, "teachers"));
             const teachers = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            console.log('Fetched teachers:', teachers); // Debug
+            console.log('Fetched teachers:', teachers);
             return teachers;
         } catch (error) {
             console.error("Error getting teachers:", error);
+            if (error.code === 'permission-denied') {
+                window.location.href = '/college-management/login.html';
+            }
             throw error;
         }
     }
@@ -329,15 +333,19 @@ export class DatabaseService {
 
     static async getSubjects() {
         try {
+            await this.verifyAuth();
             const querySnapshot = await getDocs(collection(db, "subjects"));
             const subjects = querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            console.log('Fetched subjects:', subjects); // Debug
+            console.log('Fetched subjects:', subjects);
             return subjects;
         } catch (error) {
             console.error("Error getting subjects:", error);
+            if (error.code === 'permission-denied') {
+                window.location.href = '/college-management/login.html';
+            }
             throw error;
         }
     }
@@ -394,5 +402,12 @@ export class DatabaseService {
             console.error("Error getting statistics:", error);
             throw error;
         }
+    }
+
+    static async verifyAuth() {
+        if (!auth.currentUser) {
+            throw new Error('Authentication required');
+        }
+        return auth.currentUser;
     }
 }
