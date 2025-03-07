@@ -202,48 +202,43 @@
         </div>
     </footer>
 
-    <script src="../assets/js/utils.js"></script>
-    <script type="module" src="../assets/js/main.js"></script>
-    <script type="module" src="../assets/js/pages/teachers.js"></script>
-    <script src="../assets/js/app.js"></script>
-    <script>
-        // Gestion des dropdowns sur mobile
-        document.querySelectorAll('.dropdown > a').forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    const dropdown = trigger.parentElement;
-                    dropdown.classList.toggle('active');
-                }
-            });
-        });
-    </script>
+    <!-- Single module script for authentication and initialization -->
     <script type="module">
         import { auth } from '../assets/js/firebase-config.js';
         import router from '../assets/js/router.js';
-
+        
+        // Wait for auth state
         let authInitialized = false;
-
+        
         auth.onAuthStateChanged(async user => {
             if (authInitialized) return;
             authInitialized = true;
-
+            
             if (!user) {
+                console.log('No authenticated user, redirecting to login...');
                 router.redirectToLogin();
                 return;
             }
-
+            
             console.log('User authenticated:', user.email);
             
             try {
                 const { default: TeacherManager } = await import('../assets/js/pages/teachers.js');
-                window.teacherManager = new TeacherManager();
+                new TeacherManager();
             } catch (error) {
                 console.error('Error initializing teacher management:', error);
             }
         });
 
-        // ...rest of existing code...
+        // Handle logout
+        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await router.logout();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
     </script>
 </body>
 </html>

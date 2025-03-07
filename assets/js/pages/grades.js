@@ -3,31 +3,31 @@ import { DatabaseService } from '../services/database.js';
 import router from '../router.js';
 
 export default class GradesManager {
-    constructor() {
-        this.form = document.querySelector('.form-section form');
-        this.gradesList = document.querySelector('.list-section tbody');
-        this.initializeAuth();
-        this.initializeEventListeners();
+    constructor(db) {
+        this.db = db;
+        this.initialize();
     }
 
-    async initializeAuth() {
+    async initialize() {
         try {
-            // Wait for authentication
-            const user = await new Promise((resolve) => {
-                const unsubscribe = auth.onAuthStateChanged(user => {
-                    unsubscribe();
-                    resolve(user);
-                });
-            });
+            // Verify auth first
+            const user = await DatabaseService.verifyAuth();
+            console.log('Initializing grades as:', user.email);
 
-            if (!user) {
-                throw new Error('Authentication required');
-            }
-
-            await this.loadInitialData();
+            // Initialize DOM elements
+            this.form = document.querySelector('.form-section form');
+            this.gradesList = document.querySelector('.list-section tbody');
+            
+            // Initialize everything only after auth is confirmed
+            await Promise.all([
+                this.initializeEventListeners(),
+                this.loadInitialData()
+            ]);
         } catch (error) {
-            console.error('Authentication error:', error);
-            router.redirectToLogin();
+            console.error('Initialization error:', error);
+            if (error.message === 'Authentication required') {
+                router.redirectToLogin();
+            }
         }
     }
 
@@ -300,8 +300,3 @@ export default class GradesManager {
         }
     }
 }
-
-// Initialize only after DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new GradesManager();
-});

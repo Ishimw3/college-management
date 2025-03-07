@@ -213,13 +213,9 @@ export class DatabaseService {
                 id: doc.id,
                 ...doc.data()
             }));
-            console.log('Fetched teachers:', teachers);
             return teachers;
         } catch (error) {
             console.error("Error getting teachers:", error);
-            if (error.message === 'Authentication required') {
-                window.location.replace('/college-management/login.html');
-            }
             throw error;
         }
     }
@@ -408,10 +404,10 @@ export class DatabaseService {
             const unsubscribe = auth.onAuthStateChanged(user => {
                 unsubscribe();
                 if (user) {
-                    console.log('Verified auth for:', user.email);
+                    console.log('Auth verified for:', user.email);
                     resolve(user);
                 } else {
-                    console.log('No authenticated user found');
+                    console.log('No auth found, redirecting...');
                     reject(new Error('Authentication required'));
                 }
             }, (error) => {

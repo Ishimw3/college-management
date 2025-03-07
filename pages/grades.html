@@ -188,29 +188,31 @@
     </footer>
 
     <script type="module">
-        import { auth } from '../assets/js/firebase-config.js';
+        import { auth, db } from '../assets/js/firebase-config.js';
         import router from '../assets/js/router.js';
-        import { DatabaseService } from '../assets/js/services/database.js';
+        
+        let initialized = false;
 
-        let authInitialized = false;
-
-        // Wait for Firebase to initialize
+        // Verify auth state before any initialization
         auth.onAuthStateChanged(async user => {
-            if (authInitialized) return;
-            authInitialized = true;
-            
+            if (initialized) return;
+            initialized = true;
+
             if (!user) {
+                console.log('Not authenticated, redirecting...');
                 router.redirectToLogin();
                 return;
             }
 
-            console.log('User authenticated:', user.email);
+            console.log('Authenticated as:', user.email);
             
             try {
+                // Initialize grades manager only after confirming auth
                 const { default: GradesManager } = await import('../assets/js/pages/grades.js');
-                window.gradesManager = new GradesManager();
+                const manager = new GradesManager(db);
+                window.gradesManager = manager; // For debugging
             } catch (error) {
-                console.error('Error initializing grades:', error);
+                console.error('Failed to initialize grades:', error);
             }
         });
 
@@ -224,7 +226,7 @@
             }
         });
 
-        // Mobile dropdown handler
+        // Mobile menu handling
         document.querySelectorAll('.dropdown > a').forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 if (window.innerWidth <= 768) {

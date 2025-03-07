@@ -1,20 +1,31 @@
 import { auth } from '../firebase-config.js';
 import { DatabaseService } from '../services/database.js';
+import router from '../router.js';
 
-class TeacherManager {
+export default class TeacherManager {
     constructor() {
-        // Verify authentication first
-        if (!auth.currentUser) {
-            window.location.href = '/college-management/login.html';
-            return;
-        }
+        this.initialize();
+    }
 
-        this.form = document.querySelector('.form-section form');
-        this.teachersList = document.querySelector('tbody');
-        this.ficheSection = document.getElementById('fiche');
-        this.initializeEventListeners();
-        this.loadTeachers();
-        this.loadDepartmentsAndSubjects();
+    async initialize() {
+        try {
+            await DatabaseService.verifyAuth(); // Verify auth first
+            
+            this.form = document.querySelector('.form-section form');
+            this.teachersList = document.querySelector('tbody');
+            this.ficheSection = document.getElementById('fiche');
+            
+            await Promise.all([
+                this.initializeEventListeners(),
+                this.loadTeachers(),
+                this.loadDepartmentsAndSubjects()
+            ]);
+        } catch (error) {
+            console.error('Initialization error:', error);
+            if (error.message === 'Authentication required') {
+                router.redirectToLogin();
+            }
+        }
     }
 
     async loadDepartmentsAndSubjects() {
