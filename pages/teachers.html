@@ -218,5 +218,32 @@
             });
         });
     </script>
+    <script type="module">
+        import { auth } from '../assets/js/firebase-config.js';
+        import router from '../assets/js/router.js';
+
+        let authInitialized = false;
+
+        auth.onAuthStateChanged(async user => {
+            if (authInitialized) return;
+            authInitialized = true;
+
+            if (!user) {
+                router.redirectToLogin();
+                return;
+            }
+
+            console.log('User authenticated:', user.email);
+            
+            try {
+                const { default: TeacherManager } = await import('../assets/js/pages/teachers.js');
+                window.teacherManager = new TeacherManager();
+            } catch (error) {
+                console.error('Error initializing teacher management:', error);
+            }
+        });
+
+        // ...rest of existing code...
+    </script>
 </body>
 </html>

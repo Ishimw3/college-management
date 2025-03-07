@@ -192,17 +192,23 @@
         import router from '../assets/js/router.js';
         import { DatabaseService } from '../assets/js/services/database.js';
 
+        let authInitialized = false;
+
         // Wait for Firebase to initialize
         auth.onAuthStateChanged(async user => {
+            if (authInitialized) return;
+            authInitialized = true;
+            
             if (!user) {
                 router.redirectToLogin();
                 return;
             }
 
+            console.log('User authenticated:', user.email);
+            
             try {
-                // Initialize grades manager after auth
                 const { default: GradesManager } = await import('../assets/js/pages/grades.js');
-                new GradesManager();
+                window.gradesManager = new GradesManager();
             } catch (error) {
                 console.error('Error initializing grades:', error);
             }

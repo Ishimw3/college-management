@@ -12,6 +12,15 @@ class Router {
         this.initializeAuth();
     }
 
+    async checkAuth() {
+        return new Promise((resolve) => {
+            const unsubscribe = auth.onAuthStateChanged(user => {
+                unsubscribe();
+                resolve(user);
+            });
+        });
+    }
+
     initializeAuth() {
         auth.onAuthStateChanged(user => {
             const currentPath = this.getCurrentPath();
@@ -31,16 +40,16 @@ class Router {
     }
 
     isPublicRoute(path) {
-        return this.routes.public.some(route => path.includes(route));
+        const cleanPath = path.replace(this.basePath, '').replace(/^\/+/, '');
+        return this.routes.public.some(route => cleanPath.includes(route));
     }
 
-    redirectToLogin() {
-        if (!window.location.pathname.includes('login.html')) {
+    async redirectToLogin() {
+        const user = await this.checkAuth();
+        if (!user && !window.location.pathname.includes('login.html')) {
             const currentPath = this.getCurrentPath();
             sessionStorage.setItem('redirectUrl', currentPath);
-            const loginUrl = `${this.basePath}/login.html`;
-            console.log('Redirecting to:', loginUrl);
-            window.location.replace(loginUrl);
+            window.location.replace(`${this.basePath}/login.html`);
         }
     }
 

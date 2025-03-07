@@ -333,17 +333,15 @@ export class DatabaseService {
 
     static async getSubjects() {
         try {
-            const user = await this.verifyAuth();
-            console.log('Fetching subjects as:', user.email);
+            await this.verifyAuth();
             const querySnapshot = await getDocs(collection(db, "subjects"));
-            const subjects = querySnapshot.docs.map(doc => ({
+            return querySnapshot.docs.map(doc => ({
                 id: doc.id,
                 ...doc.data()
             }));
-            console.log('Fetched subjects:', subjects);
-            return subjects;
         } catch (error) {
             console.error("Error getting subjects:", error);
+            // Only redirect if it's truly an auth error
             if (error.message === 'Authentication required') {
                 window.location.replace('/college-management/login.html');
             }
@@ -410,12 +408,15 @@ export class DatabaseService {
             const unsubscribe = auth.onAuthStateChanged(user => {
                 unsubscribe();
                 if (user) {
-                    console.log('Authenticated as:', user.email);
+                    console.log('Verified auth for:', user.email);
                     resolve(user);
                 } else {
-                    console.log('No authenticated user');
+                    console.log('No authenticated user found');
                     reject(new Error('Authentication required'));
                 }
+            }, (error) => {
+                console.error('Auth error:', error);
+                reject(error);
             });
         });
     }
