@@ -1,0 +1,129 @@
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.contact-form-section,
+.payment-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+/* WhatsApp Button */
+.whatsapp-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+}
+
+/* Payment Section */
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.price-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.price-card.featured {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    transform: scale(1.05);
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.features li {
+    margin: 0.5rem 0;
+}
+
+.btn-payment {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-payment:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+
+#stripe-payment-form {
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+#stripe-payment-form.hidden {
+    display: none;
+}
+
+#card-element {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#card-errors {
+    color: #dc3545;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .price-card.featured {
+        transform: none;
+    }
+}
