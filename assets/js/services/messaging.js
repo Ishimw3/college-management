@@ -1,25 +1,33 @@
 // Twilio credentials
-const TWILIO_ACCOUNT_SID = 'ACc95ed4b23f15d9ef7b1df1ca34b1b92a';
-const TWILIO_AUTH_TOKEN = 'f1fb130e93a8c33f75edb94ee8630c76';
-const TWILIO_PHONE_NUMBER = '+17854250457'; // Replace with your Twilio phone number
+const TWILIO_ACCOUNT_SID = 'AC9a93011daf5337b282e298216aa53929';
+const TWILIO_AUTH_TOKEN = 'fba576c39333156998611b96a47b02df';
+const TWILIO_PHONE_NUMBER = '+17854250457';
 
 export class MessagingService {
     static async sendSMS(to, message) {
         try {
-            const response = await fetch('https://api.twilio.com/2010-04-01/Accounts/' + TWILIO_ACCOUNT_SID + '/Messages.json', {
+            const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
+            const formData = new URLSearchParams();
+            formData.append('To', to);
+            formData.append('From', TWILIO_PHONE_NUMBER);
+            formData.append('Body', message);
+
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Basic ' + btoa(TWILIO_ACCOUNT_SID + ':' + TWILIO_AUTH_TOKEN)
+                    'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`)
                 },
-                body: new URLSearchParams({
-                    'To': to,
-                    'From': TWILIO_PHONE_NUMBER,
-                    'Body': message
-                })
+                body: formData
             });
 
             const data = await response.json();
+
+            if (response.status !== 201) {
+                throw new Error(data.message || 'Failed to send SMS');
+            }
+
+            console.log('SMS sent successfully:', data);
             return data;
         } catch (error) {
             console.error('Error sending SMS:', error);
