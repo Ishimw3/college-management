@@ -79,22 +79,35 @@
                     <button type="submit" class="btn-primary">Envoyer le message</button>
                 </form>
 
-                <!-- WhatsApp Button -->
+                <!-- WhatsApp and SMS Section -->
                 <div class="whatsapp-section">
-                    <h3>Contactez-nous sur WhatsApp</h3>
-                    <div class="whatsapp-form">
+                    <h3>Contactez-nous via Message</h3>
+                    <div class="message-type-toggle">
+                        <button class="toggle-btn active" data-type="whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </button>
+                        <button class="toggle-btn" data-type="sms">
+                            <i class="fas fa-sms"></i> SMS
+                        </button>
+                    </div>
+                    <div class="messaging-form">
                         <div class="form-group">
-                            <label for="whatsappNumber">Numéro WhatsApp:</label>
-                            <input type="tel" id="whatsappNumber" placeholder="Ex: +257xxxxxxxx" required>
+                            <label for="phoneNumber">Numéro de téléphone:</label>
+                            <input type="tel" id="phoneNumber" placeholder="Ex: +257xxxxxxxx" required>
                             <div class="form-help">Format international (ex: +257)</div>
                         </div>
                         <div class="form-group">
-                            <label for="whatsappMessage">Message:</label>
-                            <textarea id="whatsappMessage" rows="3" placeholder="Votre message WhatsApp"></textarea>
+                            <label for="messageText">Message:</label>
+                            <textarea id="messageText" rows="3" placeholder="Votre message"></textarea>
                         </div>
-                        <button type="button" id="whatsappButton" class="whatsapp-button">
-                            <i class="fab fa-whatsapp"></i> Envoyer sur WhatsApp
-                        </button>
+                        <div class="button-group">
+                            <button type="button" id="whatsappButton" class="messaging-button whatsapp">
+                                <i class="fab fa-whatsapp"></i> Envoyer via WhatsApp
+                            </button>
+                            <button type="button" id="smsButton" class="messaging-button sms hidden">
+                                <i class="fas fa-sms"></i> Envoyer via SMS
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

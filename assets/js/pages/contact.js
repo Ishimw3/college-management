@@ -1,3 +1,5 @@
+import { MessagingService } from '../services/messaging.js';
+
 const stripe = Stripe('pk_test_51R02vnHHsxvbq3OYnA98ZDk0qrIrUdizv6ML3IuJmQwSqy1dpCOlNCBbMn1iOuLCaCkBcwNFGeYjzOO8jcwJV62v00B43t76eg');
 
 class ContactManager {
@@ -137,4 +139,56 @@ class ContactManager {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ContactManager();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const whatsappButton = document.getElementById('whatsappButton');
+    const smsButton = document.getElementById('smsButton');
+    const phoneInput = document.getElementById('phoneNumber');
+    const messageInput = document.getElementById('messageText');
+
+    // Toggle between WhatsApp and SMS
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            const type = button.dataset.type;
+            if (type === 'whatsapp') {
+                whatsappButton.classList.remove('hidden');
+                smsButton.classList.add('hidden');
+            } else {
+                whatsappButton.classList.add('hidden');
+                smsButton.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Handle WhatsApp send
+    whatsappButton.addEventListener('click', () => {
+        const phone = phoneInput.value;
+        const message = messageInput.value;
+        if (phone && message) {
+            MessagingService.sendWhatsApp(phone, message);
+        } else {
+            alert('Veuillez remplir tous les champs');
+        }
+    });
+
+    // Handle SMS send
+    smsButton.addEventListener('click', async () => {
+        const phone = phoneInput.value;
+        const message = messageInput.value;
+        if (phone && message) {
+            try {
+                await MessagingService.sendSMS(phone, message);
+                alert('SMS envoyé avec succès!');
+            } catch (error) {
+                alert('Erreur lors de l\'envoi du SMS');
+            }
+        } else {
+            alert('Veuillez remplir tous les champs');
+        }
+    });
 });
