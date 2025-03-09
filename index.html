@@ -190,10 +190,20 @@
         import router from './assets/js/router.js';
         import { WeatherManager } from './assets/js/weather.js';
         
-        // Initialize WeatherManager immediately
-        const weatherManager = new WeatherManager();
+        // Initialize weather widget
+        new WeatherManager();
         
-        // Single authentication check
+        // Handle logout button click
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await router.logout();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Auth state observer
         auth.onAuthStateChanged(async user => {
             if (!user) {
                 router.redirectToLogin();
@@ -207,16 +217,6 @@
                 new DashboardManager(db);
             } catch (error) {
                 console.error('Error loading dashboard:', error);
-            }
-        });
-
-        // Logout handler
-        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
-            e.preventDefault();
-            try {
-                await router.logout();
-            } catch (error) {
-                console.error('Logout error:', error);
             }
         });
     </script>
