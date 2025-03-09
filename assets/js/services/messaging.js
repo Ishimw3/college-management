@@ -2,34 +2,27 @@ export class MessagingService {
     static async sendSMS(to, message) {
         try {
             const response = await fetch('https://c-man-4086.twil.io/send-sms', {
-                method: 'POST', // Ensure the method is POST
-                mode: 'cors', // Added for CORS support
+                method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    to,
-                    message
+                    to: to,
+                    message: message
                 })
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to send SMS');
             }
 
             const data = await response.json();
-            console.log('SMS Response:', data);
-
             return data;
         } catch (error) {
             console.error('Error sending SMS:', error);
             throw error;
         }
-    }
-
-    static sendWhatsApp(phoneNumber, message) {
-        const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
     }
 }
