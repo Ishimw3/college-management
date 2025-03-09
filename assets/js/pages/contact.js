@@ -192,3 +192,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneInput = document.querySelector('.phone-input');
+    const phoneNumberInput = document.getElementById('phoneNumber');
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = e.target.dataset.type;
+            
+            // Show/hide phone input based on message type
+            if (type === 'sms') {
+                phoneInput.style.display = 'none';
+                phoneNumberInput.value = '+25762072740';
+            } else {
+                phoneInput.style.display = 'block';
+                phoneNumberInput.value = '';
+            }
+
+            // Update active button
+            toggleBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // Show/hide appropriate button
+            document.getElementById('whatsappButton').classList.toggle('hidden', type === 'sms');
+            document.getElementById('smsButton').classList.toggle('hidden', type === 'whatsapp');
+        });
+    });
+});
