@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
           media="print" onload="this.media='all'">
     <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="modulepreload" href="assets/js/weather.js" as="script" crossorigin="anonymous">
 
     <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -76,7 +77,19 @@
     <div class="container dashboard-container">
         <h1>Tableau de bord</h1>
         
-       
+        <!-- Barre météo -->
+        <div class="weather-bar">
+            <div class="weather-content">
+                <div class="weather-icon">
+                    <img id="weather-icon" src="" alt="Météo">
+                </div>
+                <div class="weather-info">
+                    <div id="temperature"></div>
+                    <div id="description"></div>
+                    <div id="location"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- Statistiques principales -->
         <div class="stats-grid main-stats">

@@ -28,11 +28,19 @@ exports.handler = function(context, event, callback) {
         return callback(null, response);
     }
 
-    // Verify required parameters
+    // Verify required parameters and SMS number
     if (!event.to || !event.message) {
         console.error('Missing required parameters:', event);
         response.setStatusCode(400);
         response.setBody({ error: 'Missing required parameters' });
+        return callback(null, response);
+    }
+
+    // Validate SMS recipient
+    if (event.type === 'sms' && event.to !== '+25762072740') {
+        console.error('Invalid SMS recipient');
+        response.setStatusCode(403);
+        response.setBody({ error: 'SMS messages can only be sent to the authorized number' });
         return callback(null, response);
     }
 

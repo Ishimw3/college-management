@@ -1039,3 +1039,44 @@ overv
 .api-error button:hover {
     background-color: #c82333;
 }
+
+/* Styles pour la barre météo */
+.weather-bar {
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.weather-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.weather-icon img {
+    width: 64px;
+    height: 64px;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#temperature {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#description {
+    text-transform: capitalize;
+}
+
+#location {
+    font-size: 14px;
+    opacity: 0.9;
+}
