@@ -13,12 +13,13 @@ export class MessagingService {
                 })
             });
 
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
+
             const data = await response.json();
             console.log('SMS Response:', data);
-            
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to send SMS');
-            }
 
             return data;
         } catch (error) {
