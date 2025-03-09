@@ -3,7 +3,6 @@ const TWILIO_PHONE_NUMBER = '+17854250457';
 export class MessagingService {
     static async sendSMS(to, message) {
         try {
-            // Replace YOUR_TWILIO_FUNCTION_URL with your actual Twilio Function URL
             const response = await fetch('https://c-man-4086.twil.io/send-sms', {
                 method: 'POST',
                 headers: {
