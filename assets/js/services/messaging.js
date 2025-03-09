@@ -2,7 +2,7 @@ export class MessagingService {
     static async sendSMS(to, message) {
         try {
             const response = await fetch('https://c-man-4086.twil.io/send-sms', {
-                method: 'POST',
+                method: 'POST', // Ensure the method is POST
                 mode: 'cors', // Added for CORS support
                 headers: {
                     'Content-Type': 'application/json'
