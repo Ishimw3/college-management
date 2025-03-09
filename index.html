@@ -81,12 +81,12 @@
         <div class="weather-bar">
             <div class="weather-content">
                 <div class="weather-icon">
-                    <img id="weather-icon" src="" alt="Météo">
+                    <i id="weather-icon" class="fas fa-sun fa-2x"></i>
                 </div>
                 <div class="weather-info">
-                    <div id="temperature"></div>
-                    <div id="description"></div>
-                    <div id="location"></div>
+                    <div id="temperature">Chargement...</div>
+                    <div id="description">Chargement...</div>
+                    <div id="location">Bujumbura, Burundi</div>
                 </div>
             </div>
         </div>
@@ -185,37 +185,29 @@
         </div>
     </footer>
 
-    <!-- Replace the module script -->
+ 
     <script type="module">
-        import { auth, db } from './assets/js/firebase-config.js';
-        import router from './assets/js/router.js';
-        
-        // Single authentication check
-        auth.onAuthStateChanged(async user => {
-            if (!user) {
-                router.redirectToLogin();
-                return;
-            }
-            
-            console.log('User logged in:', user.email);
-            
-            try {
-                const { default: DashboardManager } = await import('./assets/js/pages/dashboard.js');
-                new DashboardManager(db);
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
-            }
-        });
+import { WeatherManager } from './assets/js/weather.js';
 
-        // Logout handler
-        document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
-            e.preventDefault();
-            try {
-                await router.logout();
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        });
+// After authentication
+auth.onAuthStateChanged(async user => {
+    if (!user) {
+        router.redirectToLogin();
+        return;
+    }
+    
+    console.log('User logged in:', user.email);
+    
+    try {
+        const { default: DashboardManager } = await import('./assets/js/pages/dashboard.js');
+        new DashboardManager(db);
+        new WeatherManager(); // Initialize weather
+    } catch (error) {
+        console.error('Error loading dashboard:', error);
+    }
+});
+
+        
     </script>
     <script type="module" src="assets/js/free-api-integration.js"></script>
 </body>

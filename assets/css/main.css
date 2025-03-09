@@ -651,7 +651,6 @@ td a:hover {
     color: white;
 }
 
-overv
 .overview-card p {
     color: var(--light-sky);
     font-size: 0.9rem;
@@ -1044,10 +1043,10 @@ overv
 .weather-bar {
     background: linear-gradient(135deg, #1e88e5, #1565c0);
     border-radius: 10px;
-    padding: 15px;
+    padding: 20px;
     margin-bottom: 20px;
     color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .weather-content {
@@ -1056,9 +1055,13 @@ overv
     gap: 20px;
 }
 
-.weather-icon img {
+.weather-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 64px;
     height: 64px;
+    color: #fff;
 }
 
 .weather-info {
@@ -1074,6 +1077,7 @@ overv
 
 #description {
     text-transform: capitalize;
+    font-size: 16px;
 }
 
 #location {
