@@ -1,33 +1,27 @@
-// Twilio credentials
-const TWILIO_ACCOUNT_SID = 'AC9a93011daf5337b282e298216aa53929';
-const TWILIO_AUTH_TOKEN = 'fba576c39333156998611b96a47b02df';
 const TWILIO_PHONE_NUMBER = '+17854250457';
 
 export class MessagingService {
     static async sendSMS(to, message) {
         try {
-            const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
-            const formData = new URLSearchParams();
-            formData.append('To', to);
-            formData.append('From', TWILIO_PHONE_NUMBER);
-            formData.append('Body', message);
-
-            const response = await fetch(url, {
+            // Replace YOUR_TWILIO_FUNCTION_URL with your actual Twilio Function URL
+            const response = await fetch('https://c-man-4086.twil.io/send-sms', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`)
+                    'Content-Type': 'application/json'
                 },
-                body: formData
+                body: JSON.stringify({
+                    to,
+                    message
+                })
             });
 
             const data = await response.json();
-
-            if (response.status !== 201) {
-                throw new Error(data.message || 'Failed to send SMS');
+            console.log('SMS Response:', data);
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to send SMS');
             }
 
-            console.log('SMS sent successfully:', data);
             return data;
         } catch (error) {
             console.error('Error sending SMS:', error);
