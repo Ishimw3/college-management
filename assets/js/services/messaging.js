@@ -1,3 +1,5 @@
+// Service Details: Signature: c-man, SID: ZS287612f37a169a36194623b0eb06529e, Domain: c-man-4086.twil.io
+
 const TWILIO_PHONE_NUMBER = '+17854250457';
 
 export class MessagingService {
@@ -11,7 +13,8 @@ export class MessagingService {
                 },
                 body: JSON.stringify({
                     to,
-                    message
+                    message,
+                    signature: "c-man"
                 })
             });
 
